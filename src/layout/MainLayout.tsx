@@ -46,7 +46,17 @@ function MainLayout() {
     },
   ];
   const renderRoutes = routes.map(
-    ({ type, name, icon, title, collapse, noCollapse, key, href, bgType }) => {
+    ({
+      type,
+      name,
+      icon,
+      title,
+      // collapse,
+      // noCollapse,
+      key,
+      href,
+      bgType,
+    }: any) => {
       if (type === "collapse") {
         return (
           <Link style={{ textDecoration: "none" }} to={href}>
