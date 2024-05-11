@@ -16,7 +16,7 @@ import { FaUser } from "react-icons/fa6";
 import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 function MainLayout() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const routes = [
     {

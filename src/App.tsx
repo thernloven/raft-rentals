@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import MainLayout from "./layout/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
@@ -10,6 +10,7 @@ function App() {
       <Route element={<MainLayout />}>
         <Route path="/find-photos" element={<FindPhotos />} />
         <Route path="/profile" element={<ProfileSettings />} />
+        <Route path="*" element={<Navigate to="/find-photos" />} />
       </Route>
     </Routes>
   );
