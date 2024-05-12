@@ -27,6 +27,14 @@ function MainLayout() {
       href: "/find-photos",
       icon: <MdHome size="15px" color="inherit" />,
     },
+    {
+      type: "collapse",
+      name: "All Users",
+      key: "all-users",
+      bgType: "blue",
+      href: "/all-users",
+      icon: <MdHome size="15px" color="inherit" />,
+    },
     { type: "title", title: "ACCOUNT INFORMATION", key: "tools-title-pages" },
     {
       type: "collapse",
@@ -38,10 +46,18 @@ function MainLayout() {
     },
     {
       type: "collapse",
+      name: "All Photos",
+      key: "all-photos",
+      bgType: "light",
+      href: "/all-photos",
+      icon: <MdHome size="15px" color="inherit" />,
+    },
+    {
+      type: "collapse",
       name: "My Downloads",
       key: "my-downloads",
       bgType: "light",
-      href: "/profile",
+      href: "/my-downloads",
       icon: <MdHome size="15px" color="inherit" />,
     },
   ];

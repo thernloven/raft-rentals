@@ -26,6 +26,26 @@ const theme = createTheme({
         },
       },
     },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          fontFamily: "Open Sans, sans-serif",
+          borderColor: "#E9ECEF",
+          backgroundColor: "#FFFFFF",
+          fontWeight: 600,
+          fontSize: 12,
+          "&.Mui-selected": {
+            color: "white",
+            background: "linear-gradient(45deg, #01A8E6 0%, #070077 100%)", // Custom background
+          },
+          "&.MuiPaginationItem-previousNext": {
+            color: "#8392AB",
+            borderColor: "#8392AB",
+            backgroundColor: "#FFFFFF",
+          },
+        },
+      },
+    },
 
     MuiListItemButton: {
       styleOverrides: {
