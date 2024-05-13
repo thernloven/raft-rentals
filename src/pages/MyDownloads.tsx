@@ -43,7 +43,7 @@ function MyDownloads() {
               },
             ].map((row, key) => (
               <TableRow
-                key={row.id}
+                key={key}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="left" scope="row">

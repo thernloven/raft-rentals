@@ -11,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { IoCheckmarkCircleOutline, IoEye } from "react-icons/io5";
+import { IoEye } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 
 function AllUsers() {
@@ -65,7 +65,7 @@ function AllUsers() {
                 },
               ].map((row, key) => (
                 <TableRow
-                  key={row.name}
+                  key={key}
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
                   }}

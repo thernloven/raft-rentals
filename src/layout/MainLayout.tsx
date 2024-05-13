@@ -14,9 +14,10 @@ import { FiChevronsLeft, FiChevronsRight, FiShoppingBag } from "react-icons/fi";
 import { FaUser } from "react-icons/fa6";
 
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 function MainLayout() {
   const [open, setOpen] = useState(true);
+  const { pathname } = useLocation();
 
   const routes = [
     {
@@ -60,6 +61,14 @@ function MainLayout() {
       href: "/my-downloads",
       icon: <MdHome size="15px" color="inherit" />,
     },
+    {
+      type: "collapse",
+      name: "My Uploads",
+      key: "my-uploads",
+      bgType: "light",
+      href: "/my-uploads",
+      icon: <MdHome size="15px" color="inherit" />,
+    },
   ];
   const renderRoutes = routes.map(
     ({
@@ -78,6 +87,7 @@ function MainLayout() {
           <Link style={{ textDecoration: "none" }} to={href}>
             <ListItem key={key} disablePadding>
               <ListItemButton
+                selected={pathname === href}
                 sx={{
                   display: "flex",
                   justifyContent: "center",
