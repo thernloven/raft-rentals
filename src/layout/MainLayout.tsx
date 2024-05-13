@@ -30,6 +30,15 @@ function MainLayout() {
     },
     {
       type: "collapse",
+      name: "Upload Photos",
+      key: "upload-photos",
+      bgType: "blue",
+      href: "/upload-photos",
+      icon: <MdHome size="15px" color="inherit" />,
+    },
+
+    {
+      type: "collapse",
       name: "All Users",
       key: "all-users",
       bgType: "blue",

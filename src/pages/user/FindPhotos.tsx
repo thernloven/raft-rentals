@@ -1,5 +1,5 @@
 import { Box, Card, Grid } from "@mui/material";
-import ImageCard from "../components/ImageCard";
+import ImageCard from "../../components/ImageCard";
 function FindPhotos() {
   return (
     <Box>

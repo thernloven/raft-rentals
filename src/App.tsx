@@ -2,11 +2,12 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import MainLayout from "./layout/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
-import FindPhotos from "./pages/FindPhotos";
-import MyDownloads from "./pages/MyDownloads";
-import AllUsers from "./pages/AllUsers";
-import AllPhotos from "./pages/AllPhotos";
-import MyUploads from "./pages/MyUploads";
+import FindPhotos from "./pages/user/FindPhotos";
+import MyDownloads from "./pages/user/MyDownloads";
+import AllUsers from "./pages/admin/AllUsers";
+import AllPhotos from "./pages/admin/AllPhotos";
+import MyUploads from "./pages/photographer/MyUploads";
+import UploadPhotos from "./pages/photographer/UploadPhotos";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/all-photos" element={<AllPhotos />} />
         <Route path="/my-uploads" element={<MyUploads />} />
         <Route path="/all-users" element={<AllUsers />} />
+        <Route path="/upload-photos" element={<UploadPhotos />} />
+
         <Route path="*" element={<Navigate to="/find-photos" />} />
       </Route>
     </Routes>
