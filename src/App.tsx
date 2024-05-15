@@ -17,9 +17,9 @@ function App() {
         <Route path="/profile" element={<ProfileSettings />} />
         <Route path="/my-downloads" element={<MyDownloads />} />
         <Route path="/all-photos" element={<AllPhotos />} />
-        <Route path="/my-uploads" element={<MyUploads />} />
+        <Route path="/my-uploads" element={<UploadPhotos />} />
         <Route path="/all-users" element={<AllUsers />} />
-        <Route path="/upload-photos" element={<UploadPhotos />} />
+        <Route path="/upload-photos" element={<MyUploads />} />
 
         <Route path="*" element={<Navigate to="/find-photos" />} />
       </Route>

@@ -51,39 +51,46 @@ function MyUploads() {
         >
           <Box
             sx={{
-              background: "linear-gradient(90deg, #CED4DA 30%, #EBEFF4 100%)",
-
-              padding: 1,
-              borderRadius: 1.5,
-              width: 100,
+              borderRadius: 2,
+              padding: 0.2,
+              marginTop: 1,
+              width: 150,
+              background: "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
             }}
           >
             <Typography
+              textAlign={"center"}
               sx={{
+                cursor: "pointer",
+                background: "white",
                 color: "black",
-                textAlign: "center",
                 fontSize: 12,
-                fontWeight: 500,
+                borderRadius: 1.5,
+                padding: 1,
               }}
             >
               CANCEL
             </Typography>
           </Box>
+
           <Box
             sx={{
-              background: "linear-gradient(90deg, #3A416F 0%, #141727 100%)",
-              padding: 1,
-              cursor: "pointer",
-              borderRadius: 1.5,
-              width: 100,
+              borderRadius: 2,
+              padding: 0.2,
+              marginTop: 1,
+              width: 150,
+              background: "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
             }}
           >
             <Typography
+              textAlign={"center"}
               sx={{
+                cursor: "pointer",
+
                 color: "white",
-                textAlign: "center",
                 fontSize: 12,
-                fontWeight: 400,
+                borderRadius: 1.5,
+                padding: 1,
               }}
             >
               ADD PHOTOS

@@ -5,10 +5,9 @@ function ImageCard() {
     <Box>
       <Box
         sx={{
-          height: 250,
+          height: 220,
           position: "relative",
           width: "100%",
-          objectFit: "cover",
           borderRadius: 2,
           overflow: "hidden",
         }}
@@ -17,6 +16,7 @@ function ImageCard() {
           style={{
             position: "relative",
             background: "white",
+            objectFit: "cover",
           }}
           width={"100%"}
           height={"100%"}
@@ -27,10 +27,9 @@ function ImageCard() {
       <Box
         sx={{
           borderRadius: 2,
-          padding: 0.3,
+          padding: 0.2,
           marginTop: 1,
-          background:
-            "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 100%)",
+          background: "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
         }}
       >
         <Typography
@@ -42,7 +41,8 @@ function ImageCard() {
               background: "none",
               color: "white",
             },
-            borderRadius: 2,
+            fontSize: 12,
+            borderRadius: 1.5,
             padding: 1,
           }}
         >

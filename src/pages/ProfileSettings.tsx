@@ -85,6 +85,32 @@ function ProfileSettings() {
               </Box>
             </Grid>
           </Grid>
+          <Box sx={{ display: "flex", justifyContent: "end" }}>
+            <Box
+              sx={{
+                borderRadius: 2,
+                padding: 0.2,
+                marginTop: 1,
+                width: 250,
+                background:
+                  "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
+              }}
+            >
+              <Typography
+                textAlign={"center"}
+                sx={{
+                  cursor: "pointer",
+
+                  color: "white",
+                  fontSize: 12,
+                  borderRadius: 1.5,
+                  padding: 1,
+                }}
+              >
+                Update Profile
+              </Typography>
+            </Box>
+          </Box>
         </Box>
       </Card>
       <Card
@@ -149,6 +175,32 @@ function ProfileSettings() {
                 {item}
               </Typography>
             ))}
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "end" }}>
+            <Box
+              sx={{
+                borderRadius: 2,
+                padding: 0.2,
+                marginTop: 1,
+                width: 250,
+                background:
+                  "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
+              }}
+            >
+              <Typography
+                textAlign={"center"}
+                sx={{
+                  cursor: "pointer",
+
+                  color: "white",
+                  fontSize: 12,
+                  borderRadius: 1.5,
+                  padding: 1,
+                }}
+              >
+                Add to Cart
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Card>

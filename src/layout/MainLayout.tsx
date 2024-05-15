@@ -126,7 +126,9 @@ function MainLayout() {
                   </Box>
                 </ListItemIcon>
                 <ListItemText
-                  sx={{ color: bgType === "light" ? "#A0AEC0" : "red" }}
+                  sx={{
+                    color: bgType === "light" ? "#A0AEC0" : "red",
+                  }}
                   primary={name}
                 />
               </ListItemButton>
@@ -145,6 +147,7 @@ function MainLayout() {
             textTransform="uppercase"
             fontSize={12}
             my={2}
+            ml={1}
             // textAlign={"center"}
           >
             {title}
@@ -208,7 +211,7 @@ function MainLayout() {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 1,
+            gap: 2,
             color: "#718096",
           }}
         >
@@ -221,7 +224,9 @@ function MainLayout() {
             }}
           >
             <FaUser />
-            <Typography>Logout</Typography>
+            <Typography fontSize={12} color={"#718096"}>
+              Logout
+            </Typography>
           </Box>
         </Box>
       </Box>
