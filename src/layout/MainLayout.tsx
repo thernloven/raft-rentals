@@ -39,6 +39,15 @@ function MainLayout() {
 
     {
       type: "collapse",
+      name: "Checkout",
+      key: "checkout",
+      bgType: "blue",
+      href: "/checkout",
+      icon: <MdHome size="15px" color="inherit" />,
+    },
+
+    {
+      type: "collapse",
       name: "All Users",
       key: "all-users",
       bgType: "blue",

@@ -8,6 +8,7 @@ import AllUsers from "./pages/admin/AllUsers";
 import AllPhotos from "./pages/admin/AllPhotos";
 import MyUploads from "./pages/photographer/MyUploads";
 import UploadPhotos from "./pages/photographer/UploadPhotos";
+import Checkout from "./pages/user/Checkout";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/all-photos" element={<AllPhotos />} />
         <Route path="/my-uploads" element={<UploadPhotos />} />
         <Route path="/all-users" element={<AllUsers />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/upload-photos" element={<MyUploads />} />
 
         <Route path="*" element={<Navigate to="/find-photos" />} />
