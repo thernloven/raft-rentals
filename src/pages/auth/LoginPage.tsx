@@ -14,8 +14,6 @@ import Swal from "sweetalert2";
 import { AUTH } from "../../api/auth";
 import { Form, Formik } from "formik";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { setUserCookie } from "../../store/slice/userSlice";
-import { useAppDispatch } from "../../store/hooks";
 import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -23,7 +21,7 @@ const defaultTheme = createTheme();
 
 export default function LoginPage() {
   const { loginAuthentication, loginAuthLoading } = AUTH.loginAuth();
-  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={defaultTheme}>

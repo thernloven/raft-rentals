@@ -2,9 +2,14 @@ import { Box, Card, Grid, Typography } from "@mui/material";
 import { Divider } from "antd";
 import { CARTS } from "../../api/carts";
 import { Link } from "react-router-dom";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Swal from "sweetalert2";
 
 function Checkout() {
   const { cartSummaryData } = CARTS.getSummary();
+
+  const { checkoutCartMutateAsync, checkoutCartLoading } =
+    CARTS.checkoutCartItem();
   console.log(cartSummaryData?.data);
   return (
     <Card sx={{ padding: 4, borderRadius: 2 }}>
@@ -36,7 +41,11 @@ function Checkout() {
             <Typography sx={{ color: "#000" }}>
               {cartSummaryData?.data?.item_count ?? 0} Photos
             </Typography>
-            <Typography sx={{ color: "#495057", fontSize: 12, mb: 2 }}>
+            <Typography
+              component={Link}
+              to="/checkout/photos"
+              sx={{ color: "#495057", fontSize: 12, mb: 2 }}
+            >
               See photos
             </Typography>
           </Box>
@@ -77,26 +86,42 @@ function Checkout() {
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "end" }}>
         <Box
+          component={LoadingButton}
+          disabled={checkoutCartLoading}
+          loading={checkoutCartLoading}
+          onClick={() =>
+            checkoutCartMutateAsync()
+              .then((response) => {
+                window.open(response?.url);
+              })
+              .catch((error) => {
+                Swal.fire("Warning", error?.response?.data?.message, "warning");
+              })
+          }
           sx={{
             borderRadius: 2,
             padding: 0.2,
             marginTop: 1,
-            width: 150,
+            width: "150px",
             background: "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
           }}
         >
           <Typography
             textAlign={"center"}
             sx={{
+              background: "white",
+              width: "100%",
               cursor: "pointer",
-
-              color: "white",
+              ":hover": {
+                background: "none",
+                color: "white",
+              },
               fontSize: 12,
               borderRadius: 1.5,
               padding: 1,
             }}
           >
-            CHECKOUT
+            checkout
           </Typography>
         </Box>
       </Box>

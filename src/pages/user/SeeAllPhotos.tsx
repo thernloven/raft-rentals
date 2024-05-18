@@ -1,15 +1,18 @@
 import { Box, Card, Grid } from "@mui/material";
 import ImageCard from "../../components/ImageCard";
-import { PHOTOS } from "../../api/photos";
+import { CARTS } from "../../api/carts";
 import Swal from "sweetalert2";
-function AllPhotos() {
-  const { allPhotosData } = PHOTOS.getAllPhotos();
-  const { addCartsMutateAsync, addCartsLoading } = PHOTOS.addCarts();
+function SeeAllPhotos() {
+  const { cartItemsData, cartItemsRefetch } = CARTS.getCartItems();
+
+  const { deleteCartItemMutateAsync, deleteCartItemDataLoading } =
+    CARTS.deleteCartItem();
+  console.log(cartItemsData?.data, "allPhotosData");
   return (
     <Box>
       <Card sx={{ boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)", padding: 2 }}>
         <Grid container spacing={2}>
-          {allPhotosData?.data?.map((item: any) => (
+          {cartItemsData?.data?.map((item: any) => (
             <Grid
               item
               width={"100%"}
@@ -19,17 +22,21 @@ function AllPhotos() {
               lg={3}
             >
               <ImageCard
-                loading={addCartsLoading}
-                buttonTitle="Add Cart"
+                isDelete
+                loading={deleteCartItemDataLoading}
+                buttonTitle="Remove Item"
                 onClick={async () => {
-                  await addCartsMutateAsync({
-                    bodyData: {
-                      photo_id: item?.photo_id,
-                    },
+                  await deleteCartItemMutateAsync({
+                    id: item?.photo_id,
                   })
-                    .then(() =>
-                      Swal.fire("Success", "Photo is added in cart.", "success")
-                    )
+                    .then(async () => {
+                      await cartItemsRefetch();
+                      Swal.fire(
+                        "Success",
+                        "Photo is remove from cart.",
+                        "success"
+                      );
+                    })
                     .catch((error) => {
                       console.log(error);
                       Swal.fire(
@@ -50,4 +57,4 @@ function AllPhotos() {
   );
 }
 
-export default AllPhotos;
+export default SeeAllPhotos;

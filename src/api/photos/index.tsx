@@ -10,7 +10,7 @@ export class Photos {
       refetch: allPhotosDataAuthentication,
     } = useQuery({
       queryKey: ["getAllPhotos"],
-      queryFn: async ({ bodyData }: any) =>
+      queryFn: async () =>
         await poster({
           url: `/api/photos/photos_time.php?month=2024-04-25&time=11:00`,
           method: "GET",

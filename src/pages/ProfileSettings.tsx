@@ -1,15 +1,12 @@
-import { Box, Button, Card, Grid, Typography } from "@mui/material";
-import { Input, Select } from "antd";
+import { Box, Card, Grid, Typography } from "@mui/material";
+import { Input } from "antd";
 import { AUTH } from "../api/auth";
 import { Form, Formik } from "formik";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 function ProfileSettings() {
-  const {
-    userProfileAuthData,
-    userProfileAuthRefetch,
-    userProfileAuthLoading,
-  } = AUTH.userProfileAuth();
+  const { userProfileAuthData, userProfileAuthRefetch } =
+    AUTH.userProfileAuth();
 
   const { userProfileAuthMutateAsync, userProfileUpdateLoading } =
     AUTH.userProfileUpdateAuth();
@@ -177,20 +174,20 @@ const InputField = ({ label, placeholder, ...rest }: any) => {
   );
 };
 
-const SelectField = ({ label, placeholder }: any) => {
-  return (
-    <Box>
-      <Typography
-        variant="h5"
-        sx={{
-          color: "#2D3748",
-          mb: 1,
-        }}
-      >
-        {label}
-      </Typography>
-      <Select style={{ width: "100%", margin: 0 }} placeholder={placeholder} />
-    </Box>
-  );
-};
+// const SelectField = ({ label, placeholder }: any) => {
+//   return (
+//     <Box>
+//       <Typography
+//         variant="h5"
+//         sx={{
+//           color: "#2D3748",
+//           mb: 1,
+//         }}
+//       >
+//         {label}
+//       </Typography>
+//       <Select style={{ width: "100%", margin: 0 }} placeholder={placeholder} />
+//     </Box>
+//   );
+// };
 export default ProfileSettings;
