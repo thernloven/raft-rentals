@@ -1,6 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { Image } from "antd";
-function ImageCard() {
+import { PHOTOS } from "../api/photos";
+import LoadingButton from "@mui/lab/LoadingButton";
+import Swal from "sweetalert2";
+function ImageCard({ image, id }: any) {
+  const { addCartsMutateAsync, addCartsLoading } = PHOTOS.addCarts();
   return (
     <Box>
       <Box
@@ -20,15 +24,33 @@ function ImageCard() {
           }}
           width={"100%"}
           height={"100%"}
-          src="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
+          src={image}
         />
       </Box>
 
       <Box
+        component={LoadingButton}
+        loading={addCartsLoading}
+        disabled={addCartsLoading}
+        onClick={async () => {
+          await addCartsMutateAsync({
+            bodyData: {
+              photo_id: id,
+            },
+          })
+            .then(() =>
+              Swal.fire("Success", "Photo is added in cart.", "success")
+            )
+            .catch((error) => {
+              console.log(error);
+              Swal.fire("Warning", error?.response?.data?.message, "warning");
+            });
+        }}
         sx={{
           borderRadius: 2,
           padding: 0.2,
           marginTop: 1,
+          width: "100%",
           background: "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
         }}
       >
@@ -36,6 +58,7 @@ function ImageCard() {
           textAlign={"center"}
           sx={{
             background: "white",
+            width: "100%",
             cursor: "pointer",
             ":hover": {
               background: "none",

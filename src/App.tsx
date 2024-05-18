@@ -9,12 +9,18 @@ import AllPhotos from "./pages/admin/AllPhotos";
 import MyUploads from "./pages/photographer/MyUploads";
 import UploadPhotos from "./pages/photographer/UploadPhotos";
 import Checkout from "./pages/user/Checkout";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
 
 function App() {
   return (
     <Routes>
+      <Route path="/auth/login" element={<LoginPage />} />
+      <Route path="/auth/register" element={<RegisterPage />} />
+
       <Route element={<MainLayout />}>
         <Route path="/find-photos" element={<FindPhotos />} />
+        <Route path="/find-photos/photos" element={<AllPhotos />} />
         <Route path="/profile" element={<ProfileSettings />} />
         <Route path="/my-downloads" element={<MyDownloads />} />
         <Route path="/all-photos" element={<AllPhotos />} />
@@ -22,7 +28,6 @@ function App() {
         <Route path="/all-users" element={<AllUsers />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/upload-photos" element={<MyUploads />} />
-
         <Route path="*" element={<Navigate to="/find-photos" />} />
       </Route>
     </Routes>

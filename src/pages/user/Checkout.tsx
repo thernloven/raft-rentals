@@ -1,7 +1,11 @@
 import { Box, Card, Grid, Typography } from "@mui/material";
 import { Divider } from "antd";
+import { CARTS } from "../../api/carts";
+import { Link } from "react-router-dom";
 
 function Checkout() {
+  const { cartSummaryData } = CARTS.getSummary();
+  console.log(cartSummaryData?.data);
   return (
     <Card sx={{ padding: 4, borderRadius: 2 }}>
       <Typography sx={{ color: "#495057", fontSize: 18, mb: 2 }}>
@@ -21,15 +25,17 @@ function Checkout() {
           <Box
             component={"img"}
             sx={{
-              width: 80,
-              height: 100,
+              width: 120,
+              height: 120,
               objectFit: "cover",
               borderRadius: 1,
             }}
-            src="https://opportunitymarketing.co.uk/wp-content/uploads/2020/01/Product_Marketing-1030x586.jpg"
+            src="https://raftrentals.com/wp-content/uploads/2022/06/Photo-May-13-8-41-10-PM-2048x1536.jpg"
           />
           <Box>
-            <Typography sx={{ color: "#000" }}>10 Photos</Typography>
+            <Typography sx={{ color: "#000" }}>
+              {cartSummaryData?.data?.item_count ?? 0} Photos
+            </Typography>
             <Typography sx={{ color: "#495057", fontSize: 12, mb: 2 }}>
               See photos
             </Typography>
@@ -38,76 +44,24 @@ function Checkout() {
         <Typography
           sx={{ color: "#8392AB", fontSize: 12, fontWeight: 300, mb: 2 }}
         >
-          Do you like the product? Leave us a review{" "}
-          <span
+          Need &nbsp;
+          <Link
+            to="https://raftrentals.com/contact/"
+            target="_blank"
             style={{
-              color: "black",
+              color: "#01A8E6",
               fontWeight: "600",
               cursor: "pointer",
             }}
           >
-            here
-          </span>
+            help?
+          </Link>
           .
         </Typography>
       </Box>
       <Divider />
-      <Grid container spacing={2}>
-        <Grid item lg={6}>
-          <Typography sx={{ color: "#495057", fontSize: 14, mb: 2 }}>
-            Payment Method
-          </Typography>
-          <Box>
-            <Typography sx={{ color: "#495057", fontSize: 14, mb: 2 }}>
-              Billing Information
-            </Typography>
-            <Box
-              sx={{
-                background: "#F8F9FA",
-                width: 400,
-                padding: 2,
-                borderRadius: 3,
-              }}
-            >
-              <Typography sx={{ color: "#495057", fontSize: 14, mb: 2 }}>
-                Oliver Liam
-              </Typography>
-              {[
-                {
-                  label: "Company Name:",
-                  value: "Viking Burrito",
-                },
-                {
-                  label: "Email Address::",
-                  value: "oliver@burrito.com",
-                },
-                {
-                  label: "VAT Number::",
-                  value: "FRB1235476",
-                },
-              ].map((item, key) => (
-                <Box
-                  key={key}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    mb: 0.5,
-                  }}
-                >
-                  <Typography
-                    sx={{ color: "#8392AB", fontWeight: 400, fontSize: 12 }}
-                  >
-                    {item.label}
-                  </Typography>
-                  <Typography sx={{ color: "#495057", fontSize: 12 }}>
-                    {item.value}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        </Grid>
-        <Grid item lg={6}>
+      <Grid container spacing={2} mb={3}>
+        <Grid item>
           <Typography sx={{ color: "#495057", fontSize: 14, mb: 2 }}>
             Order Summary
           </Typography>
@@ -116,7 +70,7 @@ function Checkout() {
               Total:
             </Typography>
             <Typography sx={{ color: "#495057", fontSize: 14 }}>
-              $105.95
+              ${cartSummaryData?.data?.total_price ?? 0}
             </Typography>
           </Box>
         </Grid>

@@ -2,7 +2,22 @@ import { Box, Card } from "@mui/material";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; //
+import { PHOTOS } from "../../api/photos";
+import { useNavigate } from "react-router-dom";
 function FindPhotos() {
+  const { allPhotosCalendarData } = PHOTOS.getAllPhotosCalendar();
+  const navigate = useNavigate();
+  const outputData = allPhotosCalendarData?.data.reduce(
+    (acc: any, entry: any) => {
+      const { date, times } = entry;
+      times.forEach((time: any) => acc.push({ title: time, date: date }));
+      return acc;
+    },
+    []
+  );
+
+  console.log(outputData);
+
   const handleDateClick = (arg: any) => {
     alert(arg.dateStr);
   };
@@ -15,24 +30,15 @@ function FindPhotos() {
           initialView="dayGridMonth"
           weekends={false}
           dateClick={handleDateClick}
-          events={[
-            { title: "event 1", date: "2024-05-15" },
-            { title: "event 2", date: "2024-05-15" },
-            { title: "event 1", date: "2024-05-15" },
-            { title: "event 2", date: "2024-05-15" },
-            { title: "event 1", date: "2024-05-15" },
-            { title: "event 2", date: "2024-05-15" },
-            { title: "event 1", date: "2024-05-15" },
-            { title: "event 2", date: "2024-05-15" },
-            { title: "event 1", date: "2024-05-15" },
-            { title: "event 2", date: "2024-05-15" },
-            { title: "event 2", date: "2024-04-29" },
-            { title: "event 1", date: "2024-04-16" },
-            { title: "event 2", date: "2024-05-16" },
-            { title: "event 2", date: "2024-05-16" },
-            { title: "event 1", date: "2024-05-16" },
-            { title: "event 2", date: "2024-05-16" },
-          ]}
+          eventClick={(info) => {
+            console.log(info.event?.title, "infoinfo");
+            navigate("/find-photos/photos", {
+              state: {
+                time: info.event?.title,
+              },
+            });
+          }}
+          events={outputData}
         />
       </Card>
     </Box>

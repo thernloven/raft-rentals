@@ -1,7 +1,20 @@
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { Input, Select } from "antd";
+import { AUTH } from "../api/auth";
+import { Form, Formik } from "formik";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 function ProfileSettings() {
+  const {
+    userProfileAuthData,
+    userProfileAuthRefetch,
+    userProfileAuthLoading,
+  } = AUTH.userProfileAuth();
+
+  const { userProfileAuthMutateAsync, userProfileUpdateLoading } =
+    AUTH.userProfileUpdateAuth();
+
+  console.log(userProfileAuthData?.data?.user, userProfileUpdateLoading);
   return (
     <Box>
       <Card
@@ -19,196 +32,134 @@ function ProfileSettings() {
         >
           Basic Info
         </Typography>
-        <Box component="form">
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <InputField label="First name" placeholder="Michael" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputField label="Last name" placeholder="Jackson" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <SelectField
-                label="I'm"
-                placeholder="Male"
-                // options={selectData.gender}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <SelectField
-                label="Birth Date"
-                placeholder="February"
-                // options={selectData.birthDate}
-              />
-            </Grid>
+        <Formik
+          onSubmit={async (values) => {
+            userProfileAuthMutateAsync({ bodyData: { ...values } }).then(() => {
+              userProfileAuthRefetch();
+            });
+          }}
+          enableReinitialize
+          initialValues={userProfileAuthData?.data?.user}
+        >
+          {({ getFieldProps }) => (
+            <Form>
+              <Box>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={6}>
+                    <InputField
+                      {...getFieldProps("firstname")}
+                      label="First name"
+                      placeholder="Michael"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <InputField
+                      {...getFieldProps("lastname")}
+                      label="Last name"
+                      placeholder="Jackson"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <InputField
+                      {...getFieldProps("address")}
+                      label="Address"
+                      placeholder="Eg:India"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <InputField
+                      {...getFieldProps("country")}
+                      label="Country"
+                      placeholder="Eg:India"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <InputField
+                      {...getFieldProps("state")}
+                      label="Your State"
+                      placeholder="Sydney, A"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <InputField
+                      {...getFieldProps("city")}
+                      label="City"
+                      placeholder="Eg:India"
+                    />
+                  </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <InputField
-                label="Email"
-                placeholder="example@email.com"
-                inputProps={{ type: "email" }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputField
-                label="Confirmation email"
-                placeholder="example@email.com"
-                inputProps={{ type: "email" }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputField label="Your location" placeholder="Sydney, A" />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <InputField
-                label="Phone number"
-                placeholder="+40 735 631 620"
-                inputProps={{ type: "number" }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <InputField label="Language" placeholder="English" />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box
-                display="flex"
-                flexDirection="column"
-                justifyContent="flex-end"
-                height="100%"
-              >
-                {/* <VuiTagInput
+                  <Grid item xs={12} sm={6}>
+                    <InputField
+                      label="Zip Code"
+                      placeholder="123123"
+                      {...getFieldProps("zip")}
+                      inputProps={{ type: "number" }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <InputField
+                      label="Email"
+                      {...getFieldProps("email")}
+                      placeholder="example@email.com"
+                      inputProps={{ type: "email" }}
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} md={6}>
+                    <InputField
+                      {...getFieldProps("password")}
+                      label="New Password"
+                      placeholder="Enter password"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent="flex-end"
+                      height="100%"
+                    >
+                      {/* <VuiTagInput
                   tags={skills}
                   placeholder=" "
                   onChange={(newSkill) => setSkills(newSkill)}
                   removeOnBackspace
                 /> */}
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Box sx={{ display: "flex", justifyContent: "end" }}>
+                  <Box
+                    component={LoadingButton}
+                    type="submit"
+                    loading={userProfileUpdateLoading}
+                    sx={{
+                      borderRadius: 2,
+                      padding: 1,
+                      marginTop: 1,
+                      width: 250,
+                      border: 0,
+                      background:
+                        "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
+                      cursor: "pointer",
+                      color: "white",
+                      fontSize: 12,
+                    }}
+                  >
+                    Update Profile
+                  </Box>
+                </Box>
               </Box>
-            </Grid>
-          </Grid>
-          <Box sx={{ display: "flex", justifyContent: "end" }}>
-            <Box
-              sx={{
-                borderRadius: 2,
-                padding: 0.2,
-                marginTop: 1,
-                width: 250,
-                background:
-                  "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
-              }}
-            >
-              <Typography
-                textAlign={"center"}
-                sx={{
-                  cursor: "pointer",
-
-                  color: "white",
-                  fontSize: 12,
-                  borderRadius: 1.5,
-                  padding: 1,
-                }}
-              >
-                Update Profile
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-      </Card>
-      <Card
-        sx={{
-          borderRadius: 2,
-          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-          padding: 3,
-          mt: 3,
-        }}
-      >
-        <Typography
-          variant="h4"
-          fontSize={22}
-          marginBottom={2}
-          fontWeight={600}
-        >
-          Change Password
-        </Typography>
-        <Grid container component="form" spacing={2}>
-          <Grid item sm={12}>
-            <InputField
-              label="Current Password"
-              placeholder="Current Password"
-            />
-          </Grid>
-          <Grid item sm={12}>
-            <InputField label="New Password" placeholder="New Password" />
-          </Grid>
-          <Grid item sm={12}>
-            <InputField
-              label="Confirm New Password"
-              placeholder="Confirm New Password"
-            />
-          </Grid>
-        </Grid>
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="h4" fontSize={22} fontWeight={600}>
-            Password requirements
-          </Typography>
-          <Typography
-            variant="subtitle2"
-            fontWeight={400}
-            color={"#A0AEC0"}
-            fontSize={12}
-          >
-            Please follow this guide for a strong password:
-          </Typography>
-          <Box component="ul">
-            {[
-              "One special characters",
-              "Min 6 characters",
-              "One number (2 are recommended)",
-              "Change it often",
-            ].map((item, index) => (
-              <Typography
-                fontWeight={400}
-                color={"#A0AEC0"}
-                key={index}
-                component="li"
-                fontSize={12}
-              >
-                {item}
-              </Typography>
-            ))}
-          </Box>
-          <Box sx={{ display: "flex", justifyContent: "end" }}>
-            <Box
-              sx={{
-                borderRadius: 2,
-                padding: 0.2,
-                marginTop: 1,
-                width: 250,
-                background:
-                  "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)",
-              }}
-            >
-              <Typography
-                textAlign={"center"}
-                sx={{
-                  cursor: "pointer",
-
-                  color: "white",
-                  fontSize: 12,
-                  borderRadius: 1.5,
-                  padding: 1,
-                }}
-              >
-                Add to Cart
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+            </Form>
+          )}
+        </Formik>
       </Card>
     </Box>
   );
 }
 
-const InputField = ({ label, placeholder }: any) => {
+const InputField = ({ label, placeholder, ...rest }: any) => {
   return (
     <Box>
       <Typography
@@ -221,7 +172,7 @@ const InputField = ({ label, placeholder }: any) => {
       >
         {label}
       </Typography>
-      <Input placeholder={placeholder} />
+      <Input {...rest} placeholder={placeholder} />
     </Box>
   );
 };

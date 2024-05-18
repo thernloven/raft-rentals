@@ -225,18 +225,20 @@ function MainLayout() {
           }}
         >
           <FiShoppingBag />
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <FaUser />
-            <Typography fontSize={12} color={"#718096"}>
-              Logout
-            </Typography>
-          </Box>
+          <Link to="/auth/login" replace style={{ textDecoration: "none" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <FaUser />
+              <Typography fontSize={12} color={"#718096"}>
+                Logout
+              </Typography>
+            </Box>
+          </Link>
         </Box>
       </Box>
     );
