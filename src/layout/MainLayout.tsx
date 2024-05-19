@@ -39,15 +39,6 @@ function MainLayout() {
 
     {
       type: "collapse",
-      name: "Checkout",
-      key: "checkout",
-      bgType: "blue",
-      href: "/checkout",
-      icon: <MdHome size="15px" color="inherit" />,
-    },
-
-    {
-      type: "collapse",
       name: "All Users",
       key: "all-users",
       bgType: "blue",
@@ -221,11 +212,18 @@ function MainLayout() {
             display: "flex",
             alignItems: "center",
             gap: 2,
-            color: "#718096",
+            color: "#718096 !important",
+            textDecoration: "none",
           }}
         >
-          <FiShoppingBag />
-          <Link to="/auth/login" replace style={{ textDecoration: "none" }}>
+          <Link to="/checkout" replace style={{ color: "#718096" }}>
+            <FiShoppingBag />
+          </Link>
+          <Link
+            to="/auth/login"
+            replace
+            style={{ textDecoration: "none", color: "#718096" }}
+          >
             <Box
               sx={{
                 display: "flex",

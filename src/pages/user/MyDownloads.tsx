@@ -13,8 +13,11 @@ import {
 } from "@mui/material";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { MdOutlineFileDownload } from "react-icons/md";
-
+import { ORDERS } from "../../api/orders";
+import moment from "moment";
 function MyDownloads() {
+  const { ordersData, ordersLoading } = ORDERS.getOrders();
+  console.log(ordersData, "ordersData");
   return (
     <Card>
       <TableContainer>
@@ -35,23 +38,16 @@ function MyDownloads() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {[
-              {
-                id: "1022",
-                date: "1 Nov, 10:20 AM",
-                status: "dsd",
-                price: "$89.53",
-              },
-            ].map((row, key) => (
+            {ordersData?.orders?.map((row: any, key: any) => (
               <TableRow
                 key={key}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="left" scope="row">
-                  {row.id}
+                  {row?.order_id?.slice(0, 5) + "..." + row.order_id?.slice(-5)}
                 </TableCell>
                 <TableCell align="left" scope="row">
-                  {row.date}
+                  {moment(row.created_at).format("LL")}
                 </TableCell>
                 <TableCell align="left">
                   <Box display={"flex"} alignItems={"center"} gap={1}>
