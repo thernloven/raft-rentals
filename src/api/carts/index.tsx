@@ -80,6 +80,26 @@ export class Carts {
       checkoutCartMutateAsync,
     };
   };
+
+  public checkoutPayment = ({ sessionId }: any) => {
+    const {
+      data: checkoutPaymentData,
+      isPending: checkoutPaymentLoading,
+      refetch: checkoutPaymentRefetch,
+    } = useQuery({
+      queryKey: ["checkoutPayment"],
+      queryFn: async () =>
+        await poster({
+          url: `/api/carts/payment_success.php?session_id=${sessionId}`,
+          method: "GET",
+        }),
+    });
+    return {
+      checkoutPaymentData,
+      checkoutPaymentLoading,
+      checkoutPaymentRefetch,
+    };
+  };
 }
 
 export const CARTS = new Carts();

@@ -11,20 +11,26 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { ORDERS } from "../../api/orders";
 import moment from "moment";
+import JSZip from "jszip";
+import axios from "axios";
+import { saveAs } from "file-saver";
+import { useState } from "react";
+import { Spin } from "antd";
+import Swal from "sweetalert2";
+
 function MyDownloads() {
   const { ordersData } = ORDERS.getOrders();
-  console.log(ordersData, "ordersData");
+
   return (
     <Card>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {["ID", "DATE", "STATUS", "PRICE", "ACTION"].map((item, key) => (
+              {["ID", "DATE", "PRICE", "ACTION"].map((item, key) => (
                 <TableCell
                   sx={{
                     color: "#8392AB",
@@ -38,7 +44,7 @@ function MyDownloads() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ordersData?.orders?.map((row: any, key: any) => (
+            {ordersData?.data?.map((row: any, key: any) => (
               <TableRow
                 key={key}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -49,19 +55,10 @@ function MyDownloads() {
                 <TableCell align="left" scope="row">
                   {moment(row.created_at).format("LL")}
                 </TableCell>
+
+                <TableCell align="left">${row.price}</TableCell>
                 <TableCell align="left">
-                  <Box display={"flex"} alignItems={"center"} gap={1}>
-                    <IoCheckmarkCircleOutline size={32} color="#82D616" />
-                    <Typography sx={{ color: "#495057", fontWeight: 400 }}>
-                      Downloaded
-                    </Typography>
-                  </Box>
-                </TableCell>
-                <TableCell align="left">{row.price}</TableCell>
-                <TableCell align="left">
-                  <Box display={"flex"} alignItems={"center"} ml={2}>
-                    <MdOutlineFileDownload size={22} color="#01A8E6" />
-                  </Box>
+                  <DownloadPhotos photos={row?.photos} />
                 </TableCell>
               </TableRow>
             ))}
@@ -86,4 +83,42 @@ function MyDownloads() {
   );
 }
 
+const DownloadPhotos = ({ photos }: any) => {
+  const [loading, setLoading] = useState(false);
+
+  const downloadAndZipPhotos = async () => {
+    try {
+      setLoading(true);
+      const zip = new JSZip();
+      const folder = zip.folder("photos");
+
+      for (const photo of photos) {
+        const response = await axios.get(photo.url, { responseType: "blob" });
+        folder?.file(`${photo.photo_id}.jpeg`, response.data, { binary: true });
+      }
+
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+      saveAs(zipBlob, "photos.zip");
+    } catch (error) {
+      Swal.fire(
+        "Warning",
+        "Some error occurred while downloading photos. Please try again",
+        "warning"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box
+      onClick={downloadAndZipPhotos}
+      display={"flex"}
+      alignItems={"center"}
+      ml={2}
+    >
+      {loading ? <Spin /> : <MdOutlineFileDownload size={22} color="#01A8E6" />}
+    </Box>
+  );
+};
 export default MyDownloads;

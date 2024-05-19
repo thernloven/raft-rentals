@@ -3,3 +3,14 @@
   padding: 10px;
   border-radius: 15px;
 }
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+  /* background-color: trea !important; */
+  min-width: 100px !important;
+  border-radius: 8px !important;
+  background: linear-gradient(-122deg, #01a8e6 0%, #070077 100%) !important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus {
+  box-shadow: none !important;
+}

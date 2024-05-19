@@ -3,6 +3,7 @@ import { Input } from "antd";
 import { AUTH } from "../api/auth";
 import { Form, Formik } from "formik";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Swal from "sweetalert2";
 
 function ProfileSettings() {
   const { userProfileAuthData, userProfileAuthRefetch } =
@@ -31,9 +32,14 @@ function ProfileSettings() {
         </Typography>
         <Formik
           onSubmit={async (values) => {
-            userProfileAuthMutateAsync({ bodyData: { ...values } }).then(() => {
-              userProfileAuthRefetch();
-            });
+            userProfileAuthMutateAsync({ bodyData: { ...values } })
+              .then(() => {
+                userProfileAuthRefetch();
+                Swal.fire("Profile", "Profile has been updated", "success");
+              })
+              .catch(() => {
+                Swal.fire("Warning", "Something Went Wrong.", "warning");
+              });
           }}
           enableReinitialize
           initialValues={userProfileAuthData?.data?.user}
