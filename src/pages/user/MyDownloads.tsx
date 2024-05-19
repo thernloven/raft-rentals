@@ -16,7 +16,7 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { ORDERS } from "../../api/orders";
 import moment from "moment";
 function MyDownloads() {
-  const { ordersData, ordersLoading } = ORDERS.getOrders();
+  const { ordersData } = ORDERS.getOrders();
   console.log(ordersData, "ordersData");
   return (
     <Card>
