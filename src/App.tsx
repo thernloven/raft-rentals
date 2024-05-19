@@ -13,6 +13,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import SeeAllPhotos from "./pages/user/SeeAllPhotos";
 import SuccessPage from "./pages/SuccessPage";
+import EmailSuccessPage from "./pages/EmailSuccessPage";
 
 function App() {
   return (
@@ -32,10 +33,10 @@ function App() {
         <Route path="/checkout/photos" element={<SeeAllPhotos />} />
         <Route path="/checkout/success" element={<SuccessPage />} />
         <Route path="/checkout/failed" element={<SeeAllPhotos />} />
-
         <Route path="/upload-photos" element={<MyUploads />} />
         <Route path="*" element={<Navigate to="/find-photos" />} />
       </Route>
+      <Route path="/email/success" element={<EmailSuccessPage />} />
     </Routes>
   );
 }

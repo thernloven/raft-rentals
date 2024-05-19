@@ -93,6 +93,26 @@ export class Authentication {
       userProfileAuthMutateAsync,
     };
   };
+
+  public verifyEmail = ({ token }: any) => {
+    const {
+      data: verifyEmailData,
+      isPending: verifyEmailDataLoading,
+      refetch: verifyEmailDataRefetch,
+    } = useQuery({
+      queryKey: ["verifyEmail", token],
+      queryFn: async () =>
+        await poster({
+          url: `/api/auth/verify_email.php?token=${token}`,
+          method: "GET",
+        }),
+    });
+    return {
+      verifyEmailData,
+      verifyEmailDataLoading,
+      verifyEmailDataRefetch,
+    };
+  };
 }
 
 export const AUTH = new Authentication();

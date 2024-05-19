@@ -162,7 +162,7 @@ function ProfileSettings() {
   );
 }
 
-const InputField = ({ label, placeholder, ...rest }: any) => {
+export const InputField = ({ label, placeholder, ...rest }: any) => {
   return (
     <Box>
       <Typography
@@ -180,20 +180,4 @@ const InputField = ({ label, placeholder, ...rest }: any) => {
   );
 };
 
-// const SelectField = ({ label, placeholder }: any) => {
-//   return (
-//     <Box>
-//       <Typography
-//         variant="h5"
-//         sx={{
-//           color: "#2D3748",
-//           mb: 1,
-//         }}
-//       >
-//         {label}
-//       </Typography>
-//       <Select style={{ width: "100%", margin: 0 }} placeholder={placeholder} />
-//     </Box>
-//   );
-// };
 export default ProfileSettings;

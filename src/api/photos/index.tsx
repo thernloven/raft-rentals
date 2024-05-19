@@ -24,16 +24,16 @@ export class Photos {
   };
 
   // Register authentication
-  public getAllPhotosCalendar = () => {
+  public getAllPhotosCalendar = ({ date }: any) => {
     const {
       data: allPhotosCalendarData,
       isPending: allPhotosCalendarDataLoading,
       refetch: allPhotosCalendarRefetch,
     } = useQuery({
-      queryKey: ["getAllPhotosCalendar"],
+      queryKey: ["getAllPhotosCalendar", date],
       queryFn: async () =>
         await poster({
-          url: `/api/photos/calendar.php?month=2024-04`,
+          url: `/api/photos/calendar.php?month=${date}`,
           method: "GET",
         }),
     });
@@ -61,6 +61,32 @@ export class Photos {
       addCartsData,
       addCartsLoading,
       addCartsMutateAsync,
+    };
+  };
+
+  public uploadPhotosByPhotographer = () => {
+    const {
+      data: uploadPhotosByPhotographerData,
+      isPending: uploadPhotosByPhotographerDataLoading,
+      mutateAsync: uploadPhotosByPhotographerDataMutateAsync,
+    } = useMutation({
+      mutationFn: async ({ formData }: any) =>
+        await poster({
+          url: `/api/photos/upload_photos.php`,
+          method: "POST",
+          bodyData: formData,
+        }),
+
+      // await axios.post(BASE_API + "/api/photos/upload_photos.php", formData, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // }),
+    });
+    return {
+      uploadPhotosByPhotographerData,
+      uploadPhotosByPhotographerDataLoading,
+      uploadPhotosByPhotographerDataMutateAsync,
     };
   };
 }
