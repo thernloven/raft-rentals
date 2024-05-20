@@ -11,7 +11,7 @@ function FindPhotos() {
   const [date, setDate] = useState(moment().format("YYYY-MM"));
   const { allPhotosCalendarData, allPhotosCalendarRefetch } =
     PHOTOS.getAllPhotosCalendar({
-      date,
+      date: moment(date).format("YYYY-MM"),
     });
   const navigate = useNavigate();
   const outputData = allPhotosCalendarData?.data.reduce(
@@ -28,7 +28,8 @@ function FindPhotos() {
   }, [date]);
 
   const handleDateClick = (arg: any) => {
-    alert(arg.dateStr);
+    console.log(arg.dateStr);
+    setDate(moment(arg.dateStr).format("YYYY-MM-DD"));
   };
 
   return (
@@ -46,14 +47,16 @@ function FindPhotos() {
           // weekends={false}
           dateClick={handleDateClick}
           datesSet={(arg) => {
-            setDate(moment(arg.view.currentStart).format("YYYY-MM"));
+            console.log(arg);
+            setDate(moment(arg.view.currentStart).format("YYYY-MM-DD"));
           }}
           eventClick={(info) => {
-            console.log(info.event?.title, "infoinfo");
+            // console.log(info.event.title, info.event.start, "infoinfo");
+            const date = moment(info.event.start).format("YYYY-MM-DD");
             navigate("/find-photos/photos", {
               state: {
                 time: info.event?.title,
-                date,
+                date: date,
               },
             });
           }}
