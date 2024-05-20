@@ -15,10 +15,18 @@ import { FaUser } from "react-icons/fa6";
 
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useAppSelector } from "../store/hooks";
 function MainLayout() {
   const [open, setOpen] = useState(true);
   const { pathname } = useLocation();
-
+  const { role } = useAppSelector((state) => state.userReducer);
+  // const roles = [
+  //   "admin",
+  //   "photographer",
+  //   "customer",
+  //   "non-customer",
+  //   "deleted",
+  // ];
   const routes = [
     {
       type: "collapse",
@@ -26,6 +34,7 @@ function MainLayout() {
       key: "find-photos",
       bgType: "blue",
       href: "/find-photos",
+      roles: ["customer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -34,6 +43,7 @@ function MainLayout() {
       key: "upload-photos",
       bgType: "blue",
       href: "/upload-photos",
+      roles: ["photographer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
 
@@ -43,6 +53,7 @@ function MainLayout() {
       key: "all-users",
       bgType: "blue",
       href: "/all-users",
+      roles: ["admin"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     { type: "title", title: "ACCOUNT INFORMATION", key: "tools-title-pages" },
@@ -52,6 +63,7 @@ function MainLayout() {
       key: "profile-settings",
       bgType: "light",
       href: "/profile",
+      roles: ["customer", "admin", "photographer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -60,6 +72,7 @@ function MainLayout() {
       key: "all-photos",
       bgType: "light",
       href: "/all-photos",
+      roles: ["admin"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -68,6 +81,7 @@ function MainLayout() {
       key: "my-downloads",
       bgType: "light",
       href: "/my-downloads",
+      roles: ["customer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -76,6 +90,7 @@ function MainLayout() {
       key: "my-uploads",
       bgType: "light",
       href: "/my-uploads",
+      roles: ["photographer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
   ];
@@ -88,71 +103,77 @@ function MainLayout() {
       // collapse,
       // noCollapse,
       key,
+      roles,
       href,
       bgType,
     }: any) => {
-      if (type === "collapse") {
-        return (
-          <Link style={{ textDecoration: "none" }} to={href}>
-            <ListItem key={key} disablePadding>
-              <ListItemButton
-                selected={pathname === href}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: 1,
-                }}
-              >
-                <ListItemIcon>
-                  <Box
-                    sx={{
-                      background: bgType === "light" ? "white" : "#01A8E6",
-                      padding: 1,
-                      borderRadius: 2,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: 20,
-                      height: 20,
-                      boxShadow:
-                        " 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-                      color: bgType === "light" ? "#344767" : "white",
-                    }}
-                  >
-                    {/* <MdHome size={18} /> */}
-
-                    {icon}
-                  </Box>
-                </ListItemIcon>
-                <ListItemText
+      console.log(roles?.includes(role as string), role);
+      if (roles?.includes(role as string) || !roles) {
+        if (type === "collapse") {
+          return (
+            <Link style={{ textDecoration: "none" }} to={href}>
+              <ListItem key={key} disablePadding>
+                <ListItemButton
+                  selected={pathname === href}
                   sx={{
-                    color: bgType === "light" ? "#A0AEC0" : "red",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 1,
                   }}
-                  primary={name}
-                />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        );
+                >
+                  <ListItemIcon>
+                    <Box
+                      sx={{
+                        background: bgType === "light" ? "white" : "#01A8E6",
+                        padding: 1,
+                        borderRadius: 2,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: 20,
+                        height: 20,
+                        boxShadow:
+                          " 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+                        color: bgType === "light" ? "#344767" : "white",
+                      }}
+                    >
+                      {/* <MdHome size={18} /> */}
+
+                      {icon}
+                    </Box>
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{
+                      color: bgType === "light" ? "#A0AEC0" : "red",
+                    }}
+                    primary={name}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          );
+        } else {
+          return (
+            <Typography
+              key={key}
+              display="block"
+              variant="caption"
+              fontWeight="bold"
+              color="#2D3748"
+              className="  "
+              textTransform="uppercase"
+              fontSize={12}
+              my={2}
+              ml={1}
+              // textAlign={"center"}
+            >
+              {title}
+            </Typography>
+          );
+        }
       } else {
-        return (
-          <Typography
-            key={key}
-            display="block"
-            variant="caption"
-            fontWeight="bold"
-            color="#2D3748"
-            className="  "
-            textTransform="uppercase"
-            fontSize={12}
-            my={2}
-            ml={1}
-            // textAlign={"center"}
-          >
-            {title}
-          </Typography>
-        );
+        return null;
       }
     }
   );

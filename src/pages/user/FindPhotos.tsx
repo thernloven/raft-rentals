@@ -53,6 +53,7 @@ function FindPhotos() {
             navigate("/find-photos/photos", {
               state: {
                 time: info.event?.title,
+                date,
               },
             });
           }}

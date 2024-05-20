@@ -14,27 +14,38 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import SeeAllPhotos from "./pages/user/SeeAllPhotos";
 import SuccessPage from "./pages/SuccessPage";
 import EmailSuccessPage from "./pages/EmailSuccessPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
+  // const roles = [
+  //   "admin",
+  //   "photographer",
+  //   "customer",
+  //   "non-customer",
+  //   "deleted",
+  // ];
   return (
     <Routes>
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
 
-      <Route element={<MainLayout />}>
-        <Route path="/find-photos" element={<FindPhotos />} />
-        <Route path="/find-photos/photos" element={<AllPhotos />} />
-        <Route path="/profile" element={<ProfileSettings />} />
-        <Route path="/my-downloads" element={<MyDownloads />} />
-        <Route path="/all-photos" element={<AllPhotos />} />
-        <Route path="/my-uploads" element={<UploadPhotos />} />
-        <Route path="/all-users" element={<AllUsers />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/checkout/photos" element={<SeeAllPhotos />} />
-        <Route path="/checkout/success" element={<SuccessPage />} />
-        <Route path="/checkout/failed" element={<SeeAllPhotos />} />
-        <Route path="/upload-photos" element={<MyUploads />} />
-        <Route path="*" element={<Navigate to="/find-photos" />} />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<MainLayout />}>
+          <Route path="/find-photos" element={<FindPhotos />} />
+          <Route path="/find-photos/photos" element={<AllPhotos />} />
+          <Route path="/profile" element={<ProfileSettings />} />
+          <Route path="/my-downloads" element={<MyDownloads />} />
+          <Route path="/all-photos" element={<AllPhotos />} />
+          <Route path="/my-uploads" element={<UploadPhotos />} />
+          <Route path="/all-users" element={<AllUsers />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/photos" element={<SeeAllPhotos />} />
+          <Route path="/checkout/success" element={<SuccessPage />} />
+          <Route path="/checkout/failed" element={<SeeAllPhotos />} />
+          <Route path="/upload-photos" element={<MyUploads />} />
+
+          <Route path="*" element={<Navigate to="/find-photos" />} />
+        </Route>
       </Route>
       <Route path="/email/success" element={<EmailSuccessPage />} />
     </Routes>

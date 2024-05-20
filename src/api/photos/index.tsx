@@ -3,16 +3,16 @@ import { poster } from "../poster";
 
 export class Photos {
   // login authentication
-  public getAllPhotos = () => {
+  public getAllPhotos = ({ month, time }: any) => {
     const {
       data: allPhotosData,
       isPending: allPhotosDataLoading,
       refetch: allPhotosDataAuthentication,
     } = useQuery({
-      queryKey: ["getAllPhotos"],
+      queryKey: ["getAllPhotos", month, time],
       queryFn: async () =>
         await poster({
-          url: `/api/photos/photos_time.php?month=2024-04-25&time=11:00`,
+          url: `/api/photos/photos_time.php?month=${month}&time=${time}`,
           method: "GET",
         }),
     });

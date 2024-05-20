@@ -15,13 +15,15 @@ import { AUTH } from "../../api/auth";
 import { Form, Formik } from "formik";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { setRole } from "../../store/slice/userSlice";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
   const { loginAuthentication, loginAuthLoading } = AUTH.loginAuth();
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -70,7 +72,7 @@ export default function LoginPage() {
                 await loginAuthentication({ bodyData: { ...values } })
                   .then((values) => {
                     console.log(values, "login values");
-                    // dispatch(setUserCookie(values?.session_id));
+                    dispatch(setRole(values?.user?.user_role));
                     localStorage.setItem("authToken", values.token);
                     Swal.fire("Success", "Login was successful!", "success");
                     navigate("/find-photos");

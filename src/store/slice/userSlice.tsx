@@ -3,12 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 interface UserState {
   userId: string | undefined;
   cookie: string | undefined;
+  role: string | undefined;
   activeAddress: string | undefined;
 }
 
 const initialState: UserState = {
   userId: undefined,
   cookie: undefined,
+  role: undefined,
   activeAddress: undefined,
 };
 
@@ -19,6 +21,9 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.userId = action.payload;
     },
+    setRole: (state, action) => {
+      state.role = action.payload;
+    },
     setUserCookie: (state, action) => {
       state.cookie = action.payload;
     },
@@ -28,7 +33,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setUserActiveAddress, setUserCookie } =
+export const { setUser, setUserActiveAddress, setUserCookie, setRole } =
   userSlice.actions;
 
 export default userSlice.reducer;

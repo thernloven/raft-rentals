@@ -2,8 +2,14 @@ import { Box, Card, Grid } from "@mui/material";
 import ImageCard from "../../components/ImageCard";
 import { PHOTOS } from "../../api/photos";
 import Swal from "sweetalert2";
+import { useLocation } from "react-router-dom";
 function AllPhotos() {
-  const { allPhotosData } = PHOTOS.getAllPhotos();
+  const { state } = useLocation();
+  console.log(state, "state");
+  const { allPhotosData } = PHOTOS.getAllPhotos({
+    month: state?.date,
+    time: state?.time,
+  });
   const { addCartsMutateAsync, addCartsLoading } = PHOTOS.addCarts();
   return (
     <Box>
