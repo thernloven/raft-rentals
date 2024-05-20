@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { poster } from "../poster";
-import store from "../../store/Store";
+import { store } from "../../store/Store";
 
 export class Authentication {
   store: any;

@@ -12,10 +12,10 @@ import {
 import { MdHome } from "react-icons/md";
 import { FiChevronsLeft, FiChevronsRight, FiShoppingBag } from "react-icons/fi";
 import { FaUser } from "react-icons/fa6";
-
 import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
+import Logo from "../assets/logo.png";
 function MainLayout() {
   const [open, setOpen] = useState(true);
   const { pathname } = useLocation();
@@ -34,7 +34,7 @@ function MainLayout() {
       key: "find-photos",
       bgType: "blue",
       href: "/find-photos",
-      roles: ["customer"],
+      roles: ["customer", "non-customer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -63,7 +63,7 @@ function MainLayout() {
       key: "profile-settings",
       bgType: "light",
       href: "/profile",
-      roles: ["customer", "admin", "photographer"],
+      roles: ["customer", "admin", "photographer", "non-customer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -72,7 +72,7 @@ function MainLayout() {
       key: "all-photos",
       bgType: "light",
       href: "/all-photos",
-      roles: ["admin"],
+      roles: [""],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -81,7 +81,7 @@ function MainLayout() {
       key: "my-downloads",
       bgType: "light",
       href: "/my-downloads",
-      roles: ["customer"],
+      roles: ["customer", "non-customer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
     {
@@ -90,7 +90,7 @@ function MainLayout() {
       key: "my-uploads",
       bgType: "light",
       href: "/my-uploads",
-      roles: ["photographer"],
+      roles: [""],
       icon: <MdHome size="15px" color="inherit" />,
     },
   ];
@@ -198,7 +198,7 @@ function MainLayout() {
           style={{
             width: "200px",
           }}
-          src="https://s3-alpha-sig.figma.com/img/5236/8802/fc11de3fea8e668ea90e045d1bc94464?Expires=1716163200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ds6Ra7LuA~VaykPRed~TOm4zmjaN6uU7yNLAdKNnkl7MQSNFpeEfaWjicsQx0srmTwLf35sOwlLJQtIUfBcOVw6V2exHmDgeA7hLUUE4DWiGApGM6psO1xEzommoC7iYBYOWllhJBAcGZ~MHtQxfiP30WGLr~Vz9PieDFWXZJVRkBXfiQZRO9onB0acYzQbTEwXJGoITL2VMR7ysziVZ1tYk1zBhE1nsdZmHF~EeKnBLH1zb6q0kB2AmNzlveSwm24ski9KKcqLuWBOBBqhmK3JW7ZhsTddPB~o9jr~N94F86rvq66jJEBEN-T-vR7UbsGHsNm0dvXBcsyxnWQTNJw__"
+          src={Logo}
         />
       </Box>
       <Divider sx={{ margin: "20px 0" }} />

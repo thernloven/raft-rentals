@@ -1,5 +1,14 @@
 import { AnyAction, combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slice/userSlice";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["userReducer"], // Add the reducers you want to persist
+};
+
 const combinedReducer = combineReducers({
   userReducer: userReducer,
 });
@@ -14,10 +23,14 @@ const rootReducer = (
   return combinedReducer(state, action);
 };
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };

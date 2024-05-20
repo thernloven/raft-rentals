@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import MainLayout from "./layout/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
@@ -44,7 +44,7 @@ function App() {
           <Route path="/checkout/failed" element={<SeeAllPhotos />} />
           <Route path="/upload-photos" element={<MyUploads />} />
 
-          <Route path="*" element={<Navigate to="/find-photos" />} />
+          {/* <Route path="*" element={<Navigate to="/find-photos" />} /> */}
         </Route>
       </Route>
       <Route path="/email/success" element={<EmailSuccessPage />} />
