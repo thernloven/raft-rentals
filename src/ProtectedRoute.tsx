@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useAppSelector } from "./store/hooks";
 
 function ProtectedRoute({ roles }: any) {

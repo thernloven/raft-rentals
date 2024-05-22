@@ -13,12 +13,7 @@ import { Form, Formik } from "formik";
 import { AUTH } from "../../api/auth";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import {
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from "@mui/material";
+import { IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
