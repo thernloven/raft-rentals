@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MainLayout from "./layout/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
@@ -14,6 +14,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import SeeAllPhotos from "./pages/user/SeeAllPhotos";
 import SuccessPage from "./pages/SuccessPage";
 import EmailSuccessPage from "./pages/EmailSuccessPage";
+import RoleBasedRedirect from "./RoleBasedRedirect";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
@@ -28,25 +29,42 @@ function App() {
     <Routes>
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
+      <Route path="/" element={<RoleBasedRedirect />} />
 
-      <Route element={<ProtectedRoute />}>
-        <Route element={<MainLayout />}>
+      <Route element={<MainLayout />}>
+        <Route
+          element={<ProtectedRoute roles={["customer", "non-customer"]} />}
+        >
           <Route path="/find-photos" element={<FindPhotos />} />
           <Route path="/find-photos/photos" element={<AllPhotos />} />
-          <Route path="/profile" element={<ProfileSettings />} />
-          <Route path="/my-downloads" element={<MyDownloads />} />
-          <Route path="/all-photos" element={<AllPhotos />} />
-          <Route path="/my-uploads" element={<UploadPhotos />} />
-          <Route path="/all-users" element={<AllUsers />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/photos" element={<SeeAllPhotos />} />
           <Route path="/checkout/success" element={<SuccessPage />} />
           <Route path="/checkout/failed" element={<SeeAllPhotos />} />
-          <Route path="/upload-photos" element={<MyUploads />} />
+          <Route path="/my-downloads" element={<MyDownloads />} />
+        </Route>
 
-          {/* <Route path="*" element={<Navigate to="/find-photos" />} /> */}
+        <Route element={<ProtectedRoute roles={["admin"]} />}>
+          <Route path="/all-users" element={<AllUsers />} />
+        </Route>
+
+        <Route element={<ProtectedRoute roles={["photographer"]} />}>
+          <Route path="/all-photos" element={<AllPhotos />} />
+          <Route path="/upload-photos" element={<MyUploads />} />
+          <Route path="/my-uploads" element={<UploadPhotos />} />
+        </Route>
+
+        <Route
+          element={
+            <ProtectedRoute
+              roles={["customer", "admin", "non-customer", "photographer"]}
+            />
+          }
+        >
+          <Route path="/profile" element={<ProfileSettings />} />
         </Route>
       </Route>
+
       <Route path="/email/success" element={<EmailSuccessPage />} />
     </Routes>
   );

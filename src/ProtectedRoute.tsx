@@ -1,21 +1,25 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useAppSelector } from "./store/hooks";
-import { useEffect } from "react";
 
-function ProtectedRoute() {
-  const { role } = useAppSelector((state) => state.userReducer);
-  const navigate = useNavigate();
+function ProtectedRoute({ roles }: any) {
+  const { role, userId } = useAppSelector((state) => state.userReducer);
 
-  useEffect(() => {
-    if (!role) {
-      navigate("/auth/login", { replace: true });
-    }
-  }, [role, navigate]);
+  console.log(roles, role, userId);
+  // useEffect(() => {
+  //   if (!role) {
+  //     navigate("/auth/login", { replace: true });
+  //   }
+  // }, [role, navigate]);
 
-  if (!role) {
-    // Optionally, render a loading indicator or null while redirecting
-    return null;
+  // if (!userId) {
+  //   return <Navigate to="/auth/login" />;
+  // }
+
+  if (roles && !roles.includes(role)) {
+    // return <Navigate to="/auth/login" />;
+    return;
   }
+
   return (
     <div>
       <Outlet />

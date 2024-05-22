@@ -8,16 +8,31 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { MdLockOutline } from "react-icons/md";
+import { MdLockOutline, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Form, Formik } from "formik";
 import { AUTH } from "../../api/auth";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import {
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function RegisterPage() {
+  const [showPassword, setShowPassword] = useState(false);
   const { registerAuthentication } = AUTH.registerAuth();
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -102,6 +117,35 @@ export default function RegisterPage() {
                         label="Email Address"
                         {...getFieldProps("email")}
                         autoComplete="email"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <OutlinedInput
+                        // margin="normal"
+                        required
+                        fullWidth
+                        placeholder="Password"
+                        // label="Password"
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <MdVisibilityOff />
+                              ) : (
+                                <MdVisibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        autoComplete="current-password"
+                        {...getFieldProps("password")}
                       />
                     </Grid>
                     <Grid item xs={12}>
