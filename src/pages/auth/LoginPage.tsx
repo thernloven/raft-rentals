@@ -64,8 +64,8 @@ export default function LoginPage() {
             </Typography>
             <Formik
               initialValues={{
-                email: "test@thernloven.com",
-                password: "securePassword123!",
+                email: "",
+                password: "",
               }}
               onSubmit={async (values) => {
                 console.log(values, "values");
@@ -124,11 +124,7 @@ export default function LoginPage() {
                       Sign In
                     </LoadingButton>
                     <Grid container>
-                      <Grid item xs>
-                        <Link href="#" variant="body2">
-                          Forgot password?
-                        </Link>
-                      </Grid>
+                      <Grid item xs></Grid>
                       <Grid item>
                         <Link href="/auth/register" variant="body2">
                           {"Don't have an account? Sign Up"}

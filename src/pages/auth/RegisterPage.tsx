@@ -49,15 +49,15 @@ export default function RegisterPage() {
           </Typography>
           <Formik
             initialValues={{
-              firstname: "Lukas",
-              lastname: "Thern Loven",
-              email: "lukas@thernloven.com",
-              password: "securePassword123!",
-              address: "1213 Benicia Street",
-              country: "USA",
-              state: "California",
-              city: "Los Angeles",
-              zip: "90001",
+              firstname: "",
+              lastname: "",
+              email: "",
+              password: "",
+              address: "",
+              country: "",
+              state: "",
+              city: "",
+              zip: "",
             }}
             onSubmit={async (values) => {
               console.log(values, "values");
