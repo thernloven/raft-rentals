@@ -3,7 +3,7 @@ import { useAppSelector } from "./store/hooks";
 
 const RoleBasedRedirect = () => {
   const { userId, role } = useAppSelector((state) => state.userReducer);
-  console.log(userId, role);
+  // console.log(userId, role, "userId, role");
   if (!userId) {
     return <Navigate to="/auth/login" />;
   }
@@ -12,7 +12,7 @@ const RoleBasedRedirect = () => {
     case "admin":
       return <Navigate to="/all-users" />;
     case "photographer":
-      return <Navigate to="/all-photos" />;
+      return <Navigate to="/upload-photos" />;
     case "customer":
       return <Navigate to="/find-photos" />;
     case "non-customer":

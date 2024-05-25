@@ -36,7 +36,7 @@ export default function LoginPage() {
           md={7}
           sx={{
             backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
+              "url(https://raftrentals-public.s3.eu-central-1.amazonaws.com/uploads/%F0%9F%94%A5+%286%29.png)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -59,9 +59,13 @@ export default function LoginPage() {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <MdLockOutline />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
+            <Typography component="h1" variant="h6" textAlign={"center"}>
+              Login
             </Typography>
+            <Typography component="h1" variant="subtitle2" textAlign={"center"}>
+              Please create your account to log in and view or purchase photos.
+            </Typography>
+
             <Formik
               initialValues={{
                 email: "",
@@ -76,7 +80,7 @@ export default function LoginPage() {
                     dispatch(setRole(values?.user?.user_role));
                     localStorage.setItem("authToken", values.token);
                     Swal.fire("Success", "Login was successful!", "success");
-                    navigate("/find-photos");
+                    navigate("/");
                   })
                   .catch((error) => {
                     Swal.fire(

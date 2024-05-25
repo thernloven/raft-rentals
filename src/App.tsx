@@ -17,6 +17,7 @@ import EmailSuccessPage from "./pages/EmailSuccessPage";
 import RoleBasedRedirect from "./RoleBasedRedirect";
 import ProtectedRoute from "./ProtectedRoute";
 import MyDownloadsPhotos from "./pages/user/MyDownloadsPhotos";
+import { useAppSelector } from "./store/hooks";
 
 function App() {
   // const roles = [
@@ -26,6 +27,8 @@ function App() {
   //   "non-customer",
   //   "deleted",
   // ];
+  const { userId, role } = useAppSelector((state) => state.userReducer);
+  console.log(userId, role, "userId, role");
   return (
     <Routes>
       <Route path="/auth/login" element={<LoginPage />} />
@@ -51,8 +54,8 @@ function App() {
         </Route>
 
         <Route element={<ProtectedRoute roles={["photographer"]} />}>
-          <Route path="/all-photos" element={<AllPhotos />} />
           <Route path="/upload-photos" element={<MyUploads />} />
+          <Route path="/all-photos" element={<AllPhotos />} />
           <Route path="/my-uploads" element={<UploadPhotos />} />
         </Route>
 

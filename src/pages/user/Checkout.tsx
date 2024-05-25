@@ -46,7 +46,7 @@ function Checkout() {
               to="/checkout/photos"
               sx={{ color: "#495057", fontSize: 12, mb: 2 }}
             >
-              See photos
+              View your photos
             </Typography>
           </Box>
         </Box>

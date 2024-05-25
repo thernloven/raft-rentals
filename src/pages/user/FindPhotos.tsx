@@ -17,7 +17,14 @@ function FindPhotos() {
   const outputData = allPhotosCalendarData?.data.reduce(
     (acc: any, entry: any) => {
       const { date, times } = entry;
-      times.forEach((time: any) => acc.push({ title: time, date: date }));
+
+      times.forEach((time: any) =>
+        acc.push({
+          title: moment(time, ["HH:mm"]).format("hh:mm A"),
+          time: time,
+          date: date,
+        })
+      );
       return acc;
     },
     []
@@ -51,11 +58,10 @@ function FindPhotos() {
             setDate(moment(arg.view.currentStart).format("YYYY-MM-DD"));
           }}
           eventClick={(info) => {
-            // console.log(info.event.title, info.event.start, "infoinfo");
             const date = moment(info.event.start).format("YYYY-MM-DD");
             navigate("/find-photos/photos", {
               state: {
-                time: info.event?.title,
+                time: info.event?.extendedProps?.time,
                 date: date,
               },
             });
