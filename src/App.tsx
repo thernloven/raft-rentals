@@ -16,6 +16,7 @@ import SuccessPage from "./pages/SuccessPage";
 import EmailSuccessPage from "./pages/EmailSuccessPage";
 import RoleBasedRedirect from "./RoleBasedRedirect";
 import ProtectedRoute from "./ProtectedRoute";
+import MyDownloadsPhotos from "./pages/user/MyDownloadsPhotos";
 
 function App() {
   // const roles = [
@@ -42,6 +43,7 @@ function App() {
           <Route path="/checkout/success" element={<SuccessPage />} />
           <Route path="/checkout/failed" element={<SeeAllPhotos />} />
           <Route path="/my-downloads" element={<MyDownloads />} />
+          <Route path="/my-downloads/photos" element={<MyDownloadsPhotos />} />
         </Route>
 
         <Route element={<ProtectedRoute roles={["admin"]} />}>

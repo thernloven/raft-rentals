@@ -22,6 +22,25 @@ export class Orders {
       ordersRefetch,
     };
   };
+  public getSpecificOrder = ({ orderId }: any) => {
+    const {
+      data: orderData,
+      isPending: orderLoading,
+      refetch: orderRefetch,
+    } = useQuery({
+      queryKey: ["getSpecificOrder", orderId],
+      queryFn: async () =>
+        await poster({
+          url: `/api/orders/order_photos.php?order_id=${orderId}`,
+          method: "GET",
+        }),
+    });
+    return {
+      orderData,
+      orderLoading,
+      orderRefetch,
+    };
+  };
 }
 
 export const ORDERS = new Orders();

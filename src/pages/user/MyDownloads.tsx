@@ -11,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { MdOutlineFileDownload } from "react-icons/md";
+import { MdOutlineFileDownload, MdRemoveRedEye } from "react-icons/md";
 import { ORDERS } from "../../api/orders";
 import moment from "moment";
 import JSZip from "jszip";
@@ -20,6 +20,7 @@ import { saveAs } from "file-saver";
 import { useState } from "react";
 import { Spin } from "antd";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 function MyDownloads() {
   const { ordersData } = ORDERS.getOrders();
@@ -58,7 +59,23 @@ function MyDownloads() {
 
                 <TableCell align="left">${row.price}</TableCell>
                 <TableCell align="left">
-                  <DownloadPhotos photos={row?.photos} />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: 2,
+                      alignItems: "center",
+                    }}
+                  >
+                    <DownloadPhotos photos={row?.photos} />
+                    <Link
+                      to="/my-downloads/photos"
+                      style={{ marginBottom: -2 }}
+                      state={{ orderId: row?.order_id }}
+                    >
+                      <MdRemoveRedEye size={22} color="#01A8E6" />
+                    </Link>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
@@ -111,12 +128,7 @@ const DownloadPhotos = ({ photos }: any) => {
   };
 
   return (
-    <Box
-      onClick={downloadAndZipPhotos}
-      display={"flex"}
-      alignItems={"center"}
-      ml={2}
-    >
+    <Box onClick={downloadAndZipPhotos} display={"flex"} alignItems={"center"}>
       {loading ? <Spin /> : <MdOutlineFileDownload size={22} color="#01A8E6" />}
     </Box>
   );
