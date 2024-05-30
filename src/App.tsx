@@ -18,6 +18,7 @@ import RoleBasedRedirect from "./RoleBasedRedirect";
 import ProtectedRoute from "./ProtectedRoute";
 import MyDownloadsPhotos from "./pages/user/MyDownloadsPhotos";
 import { useAppSelector } from "./store/hooks";
+import AllAdminPhotos from "./pages/admin/AllAdminPhotos";
 
 function App() {
   // const roles = [
@@ -51,6 +52,7 @@ function App() {
 
         <Route element={<ProtectedRoute roles={["admin"]} />}>
           <Route path="/all-users" element={<AllUsers />} />
+          <Route path="/admin/photos" element={<AllAdminPhotos />} />
         </Route>
 
         <Route element={<ProtectedRoute roles={["photographer"]} />}>

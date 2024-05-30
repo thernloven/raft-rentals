@@ -23,6 +23,27 @@ export class Admin {
     };
   };
 
+  // All Photos
+  public getAllPhotos = () => {
+    const {
+      data: allPhotosData,
+      isPending: allPhotosDataLoading,
+      refetch: allPhotosDataAuthentication,
+    } = useQuery({
+      queryKey: ["getAllPhotos"],
+      queryFn: async () =>
+        await poster({
+          url: `/api/photos/get_all_photos.php`,
+          method: "GET",
+        }),
+    });
+    return {
+      allPhotosData,
+      allPhotosDataLoading,
+      allPhotosDataAuthentication,
+    };
+  };
+
   public getUserDetails = ({ userId }: any) => {
     const {
       data: userData,

@@ -71,6 +71,7 @@ function MyUploads() {
                   beforeUpload={(_, files) => {
                     setFileList([...fileList, ...files]);
                   }}
+                  showUploadList={false}
                   fileList={fileList}
                 >
                   <Box

@@ -56,6 +56,17 @@ function MainLayout() {
       roles: ["admin"],
       icon: <MdHome size="15px" color="inherit" />,
     },
+
+    {
+      type: "collapse",
+      name: "All Photos",
+      key: "all-admin-photos",
+      bgType: "blue",
+      href: "/admin/photos",
+      roles: ["admin"],
+      icon: <MdHome size="15px" color="inherit" />,
+    },
+
     { type: "title", title: "ACCOUNT INFORMATION", key: "tools-title-pages" },
     {
       type: "collapse",
