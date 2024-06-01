@@ -3,6 +3,7 @@ import ImageCard from "../../components/ImageCard";
 import { PHOTOS } from "../../api/photos";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
+
 function AllPhotos() {
   const { state } = useLocation();
   console.log(state, "state");
@@ -44,7 +45,7 @@ function AllPhotos() {
               key={item?.photo_id}
               sm={12}
               md={6}
-              lg={3}
+              lg={2}
             >
               <ImageCard
                 loading={addCartsLoading}

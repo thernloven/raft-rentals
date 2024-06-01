@@ -70,9 +70,11 @@ function MyUploads() {
                   }}
                   beforeUpload={(_, files) => {
                     setFileList([...fileList, ...files]);
+                    return false;
                   }}
-                  showUploadList={false}
-                  fileList={fileList}
+                  listType="picture"
+                  // showUploadList={false}
+                  defaultFileList={fileList}
                 >
                   <Box
                     sx={{

@@ -26,7 +26,7 @@ function MyDownloadsPhotos() {
               key={item?.photo_id}
               sm={12}
               md={6}
-              lg={3}
+              lg={2}
             >
               <ImageCard
                 loading={addCartsLoading}
