@@ -16,7 +16,7 @@ function MyUploads() {
   const uploadFiles = async () => {
     const formData = new FormData();
     fileList.forEach((file) => {
-      formData.append("fileToUpload", file as any);
+      formData.append("fileToUpload[]", file as any);
     });
 
     try {
