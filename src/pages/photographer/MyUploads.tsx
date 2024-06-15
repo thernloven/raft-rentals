@@ -4,34 +4,68 @@ import { Formik, Form } from "formik";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Swal from "sweetalert2";
 import { PHOTOS } from "../../api/photos";
-import { Upload, UploadFile } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
+import { Upload } from "antd";
+import type { UploadFile, RcFile } from "antd/es/upload/interface";
 
-function MyUploads() {
+const { Dragger } = Upload;
+
+const MyUploads: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const {
-    uploadPhotosByPhotographerDataMutateAsync,
-    uploadPhotosByPhotographerDataLoading,
-  } = PHOTOS.uploadPhotosByPhotographer();
+  const [loading, setLoading] = useState(false);
+  const { uploadPhotosByPhotographerDataMutateAsync } =
+    PHOTOS.uploadPhotosByPhotographer();
 
-  const uploadFiles = async () => {
-    const formData = new FormData();
-    fileList.forEach((file) => {
-      formData.append("fileToUpload[]", file as any);
-    });
+  const uploadFilesSequentially = async () => {
+    setLoading(true);
 
     try {
-      await uploadPhotosByPhotographerDataMutateAsync({ formData }).then(() => {
-        setFileList([]);
-        Swal.fire("Success", "Photos have been uploaded", "success");
-      });
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i] as RcFile;
+
+        const formData = new FormData();
+        formData.append("fileToUpload[]", file);
+
+        await uploadPhotosByPhotographerDataMutateAsync({ formData });
+
+        setFileList((prevFileList) =>
+          prevFileList.filter((_, index) => index !== i)
+        );
+
+        console.log(`Uploaded file ${i + 1} of ${fileList.length}`);
+      }
+
+      Swal.fire("Success", "Photos have been uploaded", "success");
     } catch (error: any) {
-      console.log();
+      console.error("Error uploading files:", error);
+
       if (error?.response?.data?.length >= 1) {
         Swal.fire("Error", error?.response?.data[0]?.message, "error");
       } else {
-        console.log(error?.response?.data);
+        Swal.fire("Error", "Failed to upload photos", "error");
       }
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const props = {
+    name: "file",
+    multiple: true,
+    beforeUpload: (file: UploadFile) => {
+      setFileList((prevFileList) => [...prevFileList, file]);
+      return false;
+    },
+    onRemove: (file: UploadFile) => {
+      setFileList((prevFileList) =>
+        prevFileList.filter((item) => item.uid !== file.uid)
+      );
+    },
+    onDrop: (e: React.DragEvent<HTMLDivElement>) => {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+    fileList: fileList,
+    customRequest: () => {}, // Prevent default upload behavior
   };
 
   return (
@@ -40,7 +74,6 @@ function MyUploads() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "80vh",
       }}
     >
       <Card
@@ -55,26 +88,16 @@ function MyUploads() {
           correct metadata may not be inserted
         </Typography>
 
-        <Formik onSubmit={uploadFiles} initialValues={{}}>
+        <Formik onSubmit={uploadFilesSequentially} initialValues={{}}>
           {() => (
             <Form>
               <Box>
-                <Upload.Dragger
-                  multiple
-                  accept="image/*"
-                  onRemove={(file) => {
-                    const index = fileList.indexOf(file);
-                    const newFileList = fileList.slice();
-                    newFileList.splice(index, 1);
-                    setFileList(newFileList);
-                  }}
-                  beforeUpload={(_, files) => {
-                    setFileList([...fileList, ...files]);
-                    return false;
-                  }}
+                <Dragger
                   listType="picture"
-                  // showUploadList={false}
+                  accept="image/*"
                   defaultFileList={fileList}
+                  {...props}
+                  style={{ maxHeight: "200px", overflowY: "auto" }}
                 >
                   <Box
                     sx={{
@@ -89,10 +112,11 @@ function MyUploads() {
                     <Typography
                       sx={{ color: "#64748B", fontWeight: "semibold" }}
                     >
+                      <InboxOutlined />
                       Drop some files here to upload
                     </Typography>
                   </Box>
-                </Upload.Dragger>
+                </Dragger>
               </Box>
               <Box
                 sx={{
@@ -129,7 +153,7 @@ function MyUploads() {
                 </Box>
                 <LoadingButton
                   type="submit"
-                  loading={uploadPhotosByPhotographerDataLoading}
+                  loading={loading}
                   sx={{
                     borderRadius: 2,
                     padding: 1,
@@ -149,6 +173,6 @@ function MyUploads() {
       </Card>
     </Box>
   );
-}
+};
 
 export default MyUploads;
