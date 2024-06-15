@@ -10,16 +10,18 @@ import {
   Typography,
 } from "@mui/material";
 import { MdHome } from "react-icons/md";
-import { FiChevronsLeft, FiChevronsRight, FiShoppingBag } from "react-icons/fi";
+import { FiShoppingBag } from "react-icons/fi";
 import { FaUser } from "react-icons/fa6";
 import { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
 import Logo from "../assets/logo.png";
+import { IoArrowBack } from "react-icons/io5";
 function MainLayout() {
-  const [open, setOpen] = useState(true);
+  const [open, _] = useState(true); //setOpen
   const { pathname } = useLocation();
   const { role } = useAppSelector((state) => state.userReducer);
+  const navigate = useNavigate();
   // const roles = [
   //   "admin",
   //   "photographer",
@@ -226,19 +228,35 @@ function MainLayout() {
           padding: "15px 0",
         }}
       >
-        {open ? (
-          <FiChevronsLeft
-            cursor={"pointer"}
-            size={33}
-            onClick={() => setOpen(!open)}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "15px 0",
+          }}
+        >
+          <IoArrowBack
+            size={22}
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              navigate(-1);
+            }}
           />
-        ) : (
-          <FiChevronsRight
-            cursor={"pointer"}
-            size={33}
-            onClick={() => setOpen(!open)}
-          />
-        )}
+          {/* {open ? (
+            <FiChevronsLeft
+              cursor={"pointer"}
+              size={33}
+              onClick={() => setOpen(!open)}
+            />
+          ) : (
+            <FiChevronsRight
+              cursor={"pointer"}
+              size={33}
+              onClick={() => setOpen(!open)}
+            />
+          )} */}
+        </Box>
         <Box
           sx={{
             display: "flex",
