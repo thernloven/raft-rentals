@@ -19,6 +19,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import MyDownloadsPhotos from "./pages/user/MyDownloadsPhotos";
 import { useAppSelector } from "./store/hooks";
 import AllAdminPhotos from "./pages/admin/AllAdminPhotos";
+import Calendar from "./pages/landing/Calendar";
+import CalendarPhotos from "./pages/landing/CalendarPhotos";
 
 function App() {
   // const roles = [
@@ -34,7 +36,9 @@ function App() {
     <Routes>
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/register" element={<RegisterPage />} />
+      <Route index path="/calendar" element={<Calendar />} />
       <Route path="/" element={<RoleBasedRedirect />} />
+      <Route path="/photos" element={<CalendarPhotos />} />
 
       <Route element={<MainLayout />}>
         <Route

@@ -30,10 +30,18 @@ const userSlice = createSlice({
     setUserActiveAddress: (state, action) => {
       state.activeAddress = action.payload;
     },
+    setRemove: () => {
+      return initialState;
+    },
   },
 });
 
-export const { setUser, setUserActiveAddress, setUserCookie, setRole } =
-  userSlice.actions;
+export const {
+  setUser,
+  setRemove,
+  setUserActiveAddress,
+  setUserCookie,
+  setRole,
+} = userSlice.actions;
 
 export default userSlice.reducer;

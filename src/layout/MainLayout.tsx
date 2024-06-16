@@ -14,14 +14,15 @@ import { FiShoppingBag } from "react-icons/fi";
 import { FaUser } from "react-icons/fa6";
 import { useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import Logo from "../assets/logo.png";
 import { IoArrowBack } from "react-icons/io5";
+import { setRemove } from "../store/slice/userSlice";
 function MainLayout() {
   const [open, _] = useState(true); //setOpen
   const { pathname } = useLocation();
   const { role } = useAppSelector((state) => state.userReducer);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const roles = [
   //   "admin",
   //   "photographer",
@@ -219,79 +220,6 @@ function MainLayout() {
     </Box>
   );
 
-  const Header = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "15px 0",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "15px 0",
-          }}
-        >
-          <IoArrowBack
-            size={22}
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
-          {/* {open ? (
-            <FiChevronsLeft
-              cursor={"pointer"}
-              size={33}
-              onClick={() => setOpen(!open)}
-            />
-          ) : (
-            <FiChevronsRight
-              cursor={"pointer"}
-              size={33}
-              onClick={() => setOpen(!open)}
-            />
-          )} */}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 2,
-            color: "#718096 !important",
-            textDecoration: "none",
-          }}
-        >
-          <Link to="/checkout" replace style={{ color: "#718096" }}>
-            <FiShoppingBag />
-          </Link>
-          <Link
-            to="/auth/login"
-            replace
-            style={{ textDecoration: "none", color: "#718096" }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
-              <FaUser />
-              <Typography fontSize={12} color={"#718096"}>
-                Logout
-              </Typography>
-            </Box>
-          </Link>
-        </Box>
-      </Box>
-    );
-  };
-
   return (
     <Box
       sx={{
@@ -328,5 +256,84 @@ function MainLayout() {
     </Box>
   );
 }
+
+export const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: "15px 0",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "15px 0",
+        }}
+      >
+        <IoArrowBack
+          size={22}
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate(-1);
+          }}
+        />
+        {/* {open ? (
+          <FiChevronsLeft
+            cursor={"pointer"}
+            size={33}
+            onClick={() => setOpen(!open)}
+          />
+        ) : (
+          <FiChevronsRight
+            cursor={"pointer"}
+            size={33}
+            onClick={() => setOpen(!open)}
+          />
+        )} */}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          color: "#718096 !important",
+          textDecoration: "none",
+        }}
+      >
+        <Link to="/checkout" replace style={{ color: "#718096" }}>
+          <FiShoppingBag />
+        </Link>
+        <Link
+          to="/auth/login"
+          replace={true}
+          onClick={() => {
+            localStorage.removeItem("authToken");
+            dispatch(setRemove());
+          }}
+          style={{ textDecoration: "none", color: "#718096" }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <FaUser />
+            <Typography fontSize={12} color={"#718096"}>
+              Logout
+            </Typography>
+          </Box>
+        </Link>
+      </Box>
+    </Box>
+  );
+};
 
 export default MainLayout;

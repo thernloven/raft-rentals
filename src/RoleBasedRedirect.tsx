@@ -5,7 +5,8 @@ const RoleBasedRedirect = () => {
   const { userId, role } = useAppSelector((state) => state.userReducer);
   // console.log(userId, role, "userId, role");
   if (!userId) {
-    return <Navigate to="/auth/login" />;
+    // return <Navigate to="/auth/login" />;
+    return <Navigate to="/calendar" />;
   }
 
   switch (role) {
