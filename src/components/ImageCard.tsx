@@ -6,6 +6,7 @@ function ImageCard({
   buttonTitle,
   loading,
   onClick,
+  onImageClick,
   isDelete = false,
 }: any) {
   return (
@@ -25,6 +26,7 @@ function ImageCard({
             background: "white",
             objectFit: "cover",
           }}
+          onClick={onImageClick}
           width={"100%"}
           height={"100%"}
           src={image}
@@ -49,6 +51,10 @@ function ImageCard({
         <Typography
           textAlign={"center"}
           sx={{
+            ":active": {
+              // background: "none",
+              color: "#ffffff !important",
+            },
             background: "white",
             width: "100%",
             cursor: "pointer",

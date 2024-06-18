@@ -4,10 +4,9 @@ import { CARTS } from "../../api/carts";
 import Swal from "sweetalert2";
 function SeeAllPhotos() {
   const { cartItemsData, cartItemsRefetch } = CARTS.getCartItems();
-
+  console.log(cartItemsData?.data, "allPhotosData");
   const { deleteCartItemMutateAsync, deleteCartItemDataLoading } =
     CARTS.deleteCartItem();
-  console.log(cartItemsData?.data, "allPhotosData");
   return (
     <Box>
       <Card sx={{ boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)", padding: 2 }}>
