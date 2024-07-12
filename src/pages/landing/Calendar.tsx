@@ -9,12 +9,23 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { PUBLIC } from "../../api/public";
 import WithoutHeader from "../../components/WithoutHeader";
+import { useAppDispatch } from "../../store/hooks";
+import { setRole } from "../../store/slice/userSlice";
+
 function Calendar() {
   const [date, setDate] = useState(moment().format("YYYY-MM"));
+  const dispatch = useAppDispatch();
   const { getAllPublicCalendarData, getAllPublicCalendarDataRefetch } =
     PUBLIC.getAllPublicCalendar({
       month: moment(date).format("YYYY-MM"),
     });
+
+  useEffect(() => {
+    if (getAllPublicCalendarData?.data) {
+      dispatch(setRole(getAllPublicCalendarData?.user_role));
+      localStorage.setItem("authToken", getAllPublicCalendarData.token);
+    }
+  }, [getAllPublicCalendarData]);
 
   console.log(getAllPublicCalendarData, "getAllPublicCalendarData");
   const navigate = useNavigate();

@@ -41,6 +41,11 @@ function App() {
       <Route path="/photos" element={<CalendarPhotos />} />
 
       <Route element={<MainLayout />}>
+        <Route element={<ProtectedRoute roles={["guest"]} />}>
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/success" element={<SuccessPage />} />
+          <Route path="/checkout/failed" element={<SeeAllPhotos />} />
+        </Route>
         <Route
           element={<ProtectedRoute roles={["customer", "non-customer"]} />}
         >

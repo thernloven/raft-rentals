@@ -29,6 +29,26 @@ export class Authentication {
     };
   };
 
+  public addEmailAuth = () => {
+    const {
+      data: addEmailAuthData,
+      isPending: addEmailAuthLoading,
+      mutateAsync: addEmailAuthentication,
+    } = useMutation({
+      mutationFn: async (bodyData: any) =>
+        await poster({
+          url: `/api/auth/add_email.php`,
+          method: "POST",
+          bodyData: bodyData,
+        }),
+    });
+    return {
+      addEmailAuthData,
+      addEmailAuthLoading,
+      addEmailAuthentication,
+    };
+  };
+
   // Register authentication
   public registerAuth = () => {
     const {
@@ -111,6 +131,25 @@ export class Authentication {
       verifyEmailData,
       verifyEmailDataLoading,
       verifyEmailDataRefetch,
+    };
+  };
+  public verifyGuestEmail = () => {
+    const {
+      data: verifyGuestEmailData,
+      isPending: verifyGuestEmailLoading,
+      refetch: verifyGuestEmailRefetch,
+    } = useQuery({
+      queryKey: ["verifyGuestEmail"],
+      queryFn: async () =>
+        await poster({
+          url: `/api/auth/verified.php`,
+          method: "GET",
+        }),
+    });
+    return {
+      verifyGuestEmailData,
+      verifyGuestEmailLoading,
+      verifyGuestEmailRefetch,
     };
   };
 }

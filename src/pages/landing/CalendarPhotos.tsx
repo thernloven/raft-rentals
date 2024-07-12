@@ -13,14 +13,13 @@ function CalendarPhotos() {
   console.log(state, "state");
   const navigate = useNavigate();
   const [currentImage, setCurrentImage] = useState<number>(0);
-
   const { getAllPublicCalendarPhotosData: allPhotosData } =
     PUBLIC.getAllPublicCalendarPhotos({
       month: state?.date,
       time: state?.time,
     });
 
-  const { addCartsLoading } = PHOTOS.addCarts();
+  const { addCartsLoading, addCartsMutateAsync } = PHOTOS.addCarts();
   return (
     <Box>
       <WithoutHeader />
@@ -73,31 +72,36 @@ function CalendarPhotos() {
                     setCurrentImage(index);
                   }}
                   onClick={async () => {
-                    Swal.fire({
-                      title: "Warning",
-                      icon: "warning",
-                      text: "To purchase photos please create an account",
-                      confirmButtonText: "Create account",
-                    }).then(() => {
-                      navigate("/auth/register");
-                    });
+                    navigate("/checkout");
+                    // Swal.fire({
+                    //   title: "Warning",
+                    //   icon: "warning",
+                    //   text: "To purchase photos please create an account",
+                    //   confirmButtonText: "Create account",
+                    // }).then(() => {
+                    //   navigate("/auth/register");
+                    // });
 
-                    // await addCartsMutateAsync({
-                    //   bodyData: {
-                    //     photo_id: item?.photo_id,
-                    //   },
-                    // })
-                    //   .then(() =>
-                    //     Swal.fire("Success", "Photo is added in cart.", "success")
-                    //   )
-                    //   .catch((error) => {
-                    //     console.log(error);
-                    //     Swal.fire(
-                    //       "Warning",
-                    //       error?.response?.data?.message,
-                    //       "warning"
-                    //     );
-                    //   });
+                    await addCartsMutateAsync({
+                      bodyData: {
+                        photo_id: item?.photo_id,
+                      },
+                    })
+                      .then(() =>
+                        Swal.fire(
+                          "Success",
+                          "Photo is added in cart.",
+                          "success"
+                        )
+                      )
+                      .catch((error) => {
+                        console.log(error);
+                        Swal.fire(
+                          "Warning",
+                          error?.response?.data?.message,
+                          "warning"
+                        );
+                      });
                   }}
                   id={item?.photo_id}
                   image={item?.url}

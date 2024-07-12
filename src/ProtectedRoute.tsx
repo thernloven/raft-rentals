@@ -3,7 +3,8 @@ import { useAppSelector } from "./store/hooks";
 
 function ProtectedRoute({ roles }: any) {
   const { role, userId } = useAppSelector((state) => state.userReducer);
-  if (!userId) {
+  console.log(!userId && !role);
+  if (!userId && !role) {
     return <Navigate to="/auth/login" />;
   }
 
