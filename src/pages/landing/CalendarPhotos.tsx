@@ -72,7 +72,7 @@ function CalendarPhotos() {
                     setCurrentImage(index);
                   }}
                   onClick={async () => {
-                    navigate("/checkout");
+                    // navigate("/checkout");
                     // Swal.fire({
                     //   title: "Warning",
                     //   icon: "warning",

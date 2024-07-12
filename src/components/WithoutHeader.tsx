@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { FaUser } from "react-icons/fa6";
+import { FiShoppingBag } from "react-icons/fi";
 import { IoArrowBack } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -38,24 +39,33 @@ function WithoutHeader() {
           textDecoration: "none",
         }}
       >
-        <Link
-          to="/auth/login"
-          replace
-          style={{ textDecoration: "none", color: "#718096" }}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
         >
-          <Box
-            sx={{
+          <Link to="/checkout" replace style={{ color: "#718096" }}>
+            <FiShoppingBag style={{ margin: -1 }} />
+          </Link>
+          <Link
+            to="/auth/login"
+            replace
+            style={{
               display: "flex",
               alignItems: "center",
-              gap: 1,
+              gap: 2,
+              textDecoration: "none",
+              color: "#718096",
             }}
           >
             <FaUser />
             <Typography fontSize={12} color={"#718096"}>
               Login
             </Typography>
-          </Box>
-        </Link>
+          </Link>
+        </Box>
       </Box>
     </Box>
   );

@@ -70,7 +70,11 @@ function MainLayout() {
       icon: <MdHome size="15px" color="inherit" />,
     },
 
-    { type: "title", title: "ACCOUNT INFORMATION", key: "tools-title-pages" },
+    role != "guest" && {
+      type: "title",
+      title: "ACCOUNT INFORMATION",
+      key: "tools-title-pages",
+    },
     {
       type: "collapse",
       name: "Profile Settings",
