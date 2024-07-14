@@ -1,7 +1,7 @@
 import { Box, Card, Grid, Typography } from "@mui/material";
 import ImageCard from "../../components/ImageCard";
 import { PHOTOS } from "../../api/photos";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { PUBLIC } from "../../api/public";
 import WithoutHeader from "../../components/WithoutHeader";
 import { Image } from "antd";
@@ -11,7 +11,6 @@ import { useState } from "react";
 function CalendarPhotos() {
   const { state } = useLocation();
   console.log(state, "state");
-  const navigate = useNavigate();
   const [currentImage, setCurrentImage] = useState<number>(0);
   const { getAllPublicCalendarPhotosData: allPhotosData } =
     PUBLIC.getAllPublicCalendarPhotos({
