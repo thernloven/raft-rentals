@@ -4,9 +4,12 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { FaCircleCheck } from "react-icons/fa6";
+import { useAppSelector } from "../store/hooks";
 
 function SuccessPage() {
   const [searchParams] = useSearchParams();
+  const { role } = useAppSelector((state) => state.userReducer);
+
   const { checkoutPaymentData, checkoutPaymentRefetch } = CARTS.checkoutPayment(
     {
       sessionId: searchParams?.get("session_id"),
@@ -35,13 +38,15 @@ function SuccessPage() {
         severity="success"
       >
         Confirmation that your payment was successful. Download your photos
-        <Link
-          to="/my-downloads"
-          replace
-          style={{ textDecoration: "none", color: "#1e4620" }}
-        >
-          <strong>&nbsp;here.</strong>
-        </Link>
+        {role !== "guest" && (
+          <Link
+            to="/my-downloads"
+            replace
+            style={{ textDecoration: "none", color: "#1e4620" }}
+          >
+            <strong>&nbsp;here.</strong>
+          </Link>
+        )}
       </Alert>
     </Box>
   );

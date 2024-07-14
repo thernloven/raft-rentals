@@ -265,6 +265,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { role } = useAppSelector((state) => state.userReducer);
+
   return (
     <Box
       sx={{

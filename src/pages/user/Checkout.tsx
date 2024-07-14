@@ -105,7 +105,7 @@ function Checkout() {
               email: values.email,
             })
               .then(async () => {
-                Swal.fire("Warning", "Email Added successfully", "success");
+                Swal.fire("Success", "Email Added successfully", "success");
                 await verifyGuestEmailRefetch();
               })
               .catch((error) => {
