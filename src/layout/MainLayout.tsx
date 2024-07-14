@@ -264,6 +264,7 @@ function MainLayout() {
 export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { role } = useAppSelector((state) => state.userReducer);
   return (
     <Box
       sx={{
@@ -331,7 +332,7 @@ export const Header = () => {
           >
             <FaUser />
             <Typography fontSize={12} color={"#718096"}>
-              Logout
+              {role === "guest" ? "Login" : "Logout"}
             </Typography>
           </Box>
         </Link>
