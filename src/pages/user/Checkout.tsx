@@ -1,7 +1,7 @@
 import { Box, Card, Grid, Typography } from "@mui/material";
 import { Divider, Input } from "antd";
 import { CARTS } from "../../api/carts";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Swal from "sweetalert2";
 import { AUTH } from "../../api/auth";
@@ -105,7 +105,7 @@ function Checkout() {
               email: values.email,
             })
               .then(async () => {
-                Swal.fire("Warning", "Email Added successfully", "warning");
+                Swal.fire("Warning", "Email Added successfully", "success");
                 await verifyGuestEmailRefetch();
               })
               .catch((error) => {

@@ -45,6 +45,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/success" element={<SuccessPage />} />
           <Route path="/checkout/failed" element={<SeeAllPhotos />} />
+          <Route path="/checkout/photos" element={<SeeAllPhotos />} />
         </Route>
         <Route
           element={<ProtectedRoute roles={["customer", "non-customer"]} />}
