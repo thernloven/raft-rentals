@@ -84,6 +84,7 @@ function Calendar() {
                 },
               });
             }}
+            eventOrder={false as any}
             events={outputData}
           />
         </Card>
