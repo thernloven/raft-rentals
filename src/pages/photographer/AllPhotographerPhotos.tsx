@@ -2,13 +2,11 @@ import { Box, Card, Grid, Typography } from "@mui/material";
 import ImageCard from "../../components/ImageCard";
 import { PHOTOS } from "../../api/photos";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
 import { CARTS } from "../../api/carts";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { DatePicker, Image, Spin } from "antd";
 import { useInView } from "react-intersection-observer";
 function AllPhotographerPhotos() {
-  const { state } = useLocation();
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.5, // Trigger when 50% of the last item is visible
@@ -42,7 +40,7 @@ function AllPhotographerPhotos() {
     );
 
     const content = allData?.pages.flatMap((pages: any) =>
-      pages?.data.map((photo: any, index: number) => ({
+      pages?.data.map((photo: any) => ({
         ...photo,
         isAdded: checkedMap.has(photo.photo_id),
 

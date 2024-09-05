@@ -123,8 +123,8 @@ function MainLayout() {
       // noCollapse,
       key,
       roles,
+
       href,
-      bgType,
     }: any) => {
       console.log(roles?.includes(role as string), role);
       const pathSelect = pathname === href;
