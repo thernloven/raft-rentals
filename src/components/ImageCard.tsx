@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
-import { Button, Image } from "antd";
 import { IoIosEye } from "react-icons/io";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useState } from "react";
 import { HiFolderDownload } from "react-icons/hi";
+
 function ImageCard({
   image,
   buttonTitle,
@@ -12,13 +12,15 @@ function ImageCard({
   onImageClick,
   isDelete = false,
   isDownload = false,
+  isButton = true,
 }: any) {
   const [hover, setHover] = useState(false);
+
   return (
     <Box>
       <Box
         sx={{
-          height: 220,
+          height: 120,
           position: "relative",
           width: "100%",
           borderRadius: 2,
@@ -60,12 +62,18 @@ function ImageCard({
             }}
           >
             {isDownload && (
-              <HiFolderDownload
-                style={{ fontSize: "24px", color: "white", cursor: "pointer" }}
-                onClick={() => {
-                  alert("Download");
-                }}
-              />
+              <a href={image} download target="_blank">
+                <HiFolderDownload
+                  style={{
+                    fontSize: "24px",
+                    color: "white",
+                    cursor: "pointer",
+                  }}
+                  // onClick={() => {
+                  //   handleDownload(image);
+                  // }}
+                />
+              </a>
             )}
             <IoIosEye
               onClick={onImageClick}
@@ -104,43 +112,45 @@ function ImageCard({
         /> */}
       </Box>
 
-      <Box
-        component={LoadingButton}
-        loading={loading}
-        disabled={loading}
-        onClick={onClick}
-        sx={{
-          borderRadius: 2,
-          padding: 0.2,
-          marginTop: 1,
-          width: "100%",
-          background: !isDelete
-            ? "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)"
-            : "linear-gradient(-122deg, #EB001B 20%, #EB001B 80%)",
-        }}
-      >
-        <Typography
-          textAlign={"center"}
+      {isButton && (
+        <Box
+          component={LoadingButton}
+          loading={loading}
+          disabled={loading}
+          onClick={onClick}
           sx={{
-            ":active": {
-              // background: "none",
-              color: "#ffffff !important",
-            },
-            background: "white",
+            borderRadius: 2,
+            padding: 0.2,
+            marginTop: 1,
             width: "100%",
-            cursor: "pointer",
-            ":hover": {
-              background: "none",
-              color: "white",
-            },
-            fontSize: 12,
-            borderRadius: 1.5,
-            padding: 1,
+            background: !isDelete
+              ? "linear-gradient(-122deg, #01a8e6 0%, #070077 100%)"
+              : "linear-gradient(-122deg, #EB001B 20%, #EB001B 80%)",
           }}
         >
-          {buttonTitle}
-        </Typography>
-      </Box>
+          <Typography
+            textAlign={"center"}
+            sx={{
+              ":active": {
+                // background: "none",
+                color: "#ffffff !important",
+              },
+              background: "white",
+              width: "100%",
+              cursor: "pointer",
+              ":hover": {
+                background: "none",
+                color: "white",
+              },
+              fontSize: 12,
+              borderRadius: 1.5,
+              padding: 1,
+            }}
+          >
+            {buttonTitle}
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }

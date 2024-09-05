@@ -4,18 +4,35 @@ import { PHOTOS } from "../../api/photos";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 import { CARTS } from "../../api/carts";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { DatePicker, Image, Spin } from "antd";
-
+import { useInView } from "react-intersection-observer";
 function AllPhotographerPhotos() {
   const { state } = useLocation();
+  const { ref, inView } = useInView({
+    triggerOnce: false,
+    threshold: 0.5, // Trigger when 50% of the last item is visible
+  });
+
   const [date, setDate] = useState("");
   const [visible, setVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState<number>(0);
-  const { allPhotosData, allPhotosDataAuthentication, allPhotosDataLoading } =
-    PHOTOS.getAllPhotoGrapherPhotos({
-      date: date,
-    });
+  const {
+    allPhotosData,
+    allPhotosDataAuthentication,
+    allPhotosDataLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+  } = PHOTOS.getAllPhotoGrapherPhotos({
+    date: date,
+  });
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage]);
+
   const { cartItemsData, cartItemsRefetch } = CARTS.getCartItems();
   const { addCartsMutateAsync, addCartsLoading } = PHOTOS.addCarts();
   // console.log(cartItemsData?.data, "allPhotosData", allPhotosData?.data);
@@ -24,11 +41,26 @@ function AllPhotographerPhotos() {
       checkedData?.data?.map((photo: any) => [photo.photo_id, true])
     );
 
-    return allData?.data?.map((photo: any) => ({
-      ...photo,
-      isAdded: checkedMap.has(photo.photo_id),
-    }));
+    const content = allData?.pages.flatMap((pages: any) =>
+      pages?.data.map((photo: any, index: number) => ({
+        ...photo,
+        isAdded: checkedMap.has(photo.photo_id),
+
+        // if (todos.length == index + 1) {
+        //   return <TodoCard innerRef={ref} key={todo.id} todo={todo} />;
+        // }
+        // return <TodoCard key={todo.id} todo={todo} />;
+      }))
+    );
+    return content;
+    // return allData?.pages?.map((data: any) =>
+    //   data?.data?.map((photo: any) => ({
+    //     ...photo,
+    //     isAdded: checkedMap.has(photo.photo_id),
+    //   }))
+    // );
   };
+
   const resultArray = addIsAddedProperty(allPhotosData, cartItemsData);
 
   useEffect(() => {
@@ -36,6 +68,7 @@ function AllPhotographerPhotos() {
     allPhotosDataAuthentication();
   }, [addCartsLoading]);
 
+  console.log(resultArray, allPhotosData, "resultArrayresultArray");
   return (
     <Box>
       <Typography
@@ -58,7 +91,6 @@ function AllPhotographerPhotos() {
         />
       </Box>
       <Card sx={{ boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)", padding: 2 }}>
-        {allPhotosDataLoading && <Spin />}
         <Grid container spacing={2}>
           <Image.PreviewGroup
             preview={{
@@ -69,7 +101,7 @@ function AllPhotographerPhotos() {
                 setCurrentImage(current + 1);
               },
             }}
-            items={allPhotosData?.data?.map((photo: any) => photo?.url)}
+            items={resultArray?.map((photo: any) => photo?.url)}
           >
             {resultArray?.map((item: any, index: any) => (
               <Grid
@@ -79,10 +111,12 @@ function AllPhotographerPhotos() {
                 sm={12}
                 md={6}
                 lg={2}
+                ref={index === resultArray?.length - 1 ? ref : null}
               >
                 <ImageCard
                   loading={addCartsLoading}
                   isDownload
+                  isButton={false}
                   buttonTitle={item?.isAdded ? "Added" : "Add Cart"}
                   onImageClick={() => {
                     setCurrentImage(index);
@@ -117,6 +151,7 @@ function AllPhotographerPhotos() {
             ))}
           </Image.PreviewGroup>
         </Grid>
+        {(allPhotosDataLoading || isFetchingNextPage) && <Spin />}
       </Card>
     </Box>
   );

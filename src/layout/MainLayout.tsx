@@ -127,13 +127,14 @@ function MainLayout() {
       bgType,
     }: any) => {
       console.log(roles?.includes(role as string), role);
+      const pathSelect = pathname === href;
       if (roles?.includes(role as string) || !roles) {
         if (type === "collapse") {
           return (
             <Link style={{ textDecoration: "none" }} to={href}>
               <ListItem key={key} disablePadding>
                 <ListItemButton
-                  selected={pathname === href}
+                  selected={pathSelect}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -144,7 +145,7 @@ function MainLayout() {
                   <ListItemIcon>
                     <Box
                       sx={{
-                        background: bgType === "light" ? "white" : "#01A8E6",
+                        background: !pathSelect ? "white" : "#01A8E6",
                         padding: 1,
                         borderRadius: 2,
                         display: "flex",
@@ -154,7 +155,7 @@ function MainLayout() {
                         height: 20,
                         boxShadow:
                           " 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
-                        color: bgType === "light" ? "#344767" : "white",
+                        color: !pathSelect ? "#344767" : "white",
                       }}
                     >
                       {/* <MdHome size={18} /> */}
@@ -164,7 +165,7 @@ function MainLayout() {
                   </ListItemIcon>
                   <ListItemText
                     sx={{
-                      color: bgType === "light" ? "#A0AEC0" : "red",
+                      color: !pathSelect ? "#A0AEC0" : "red",
                     }}
                     primary={name}
                   />

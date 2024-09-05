@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { poster } from "../poster";
 
 export class Photos {
@@ -28,18 +28,40 @@ export class Photos {
       data: allPhotosData,
       isPending: allPhotosDataLoading,
       refetch: allPhotosDataAuthentication,
-    } = useQuery({
+      fetchNextPage,
+      isFetchingNextPage,
+      hasNextPage,
+    } = useInfiniteQuery({
       queryKey: ["getAllPhotos", date],
-      queryFn: async () =>
+      initialPageParam: 1,
+      queryFn: async ({ pageParam }) =>
         await poster({
-          url: `/api/photos/get_all_photos.php?date=${date}`,
+          url: `/api/photos/get_all_photos.php?date=${date}&page=${pageParam}`,
           method: "GET",
         }),
+      getNextPageParam: (lastPage, allPages) => {
+        console.log(
+          lastPage,
+          allPages,
+          "lastPagelastPagelastPagelastPagelastPage"
+        );
+        // Assuming lastPage has a structure like { photos: [], totalPages: n }
+        if (
+          lastPage.data.length > 0 &&
+          allPages.length < lastPage.total_pages
+        ) {
+          return allPages.length + 1;
+        }
+        return undefined; // No more pages to load
+      },
     });
     return {
       allPhotosData,
       allPhotosDataLoading,
       allPhotosDataAuthentication,
+      fetchNextPage,
+      isFetchingNextPage,
+      hasNextPage,
     };
   };
 
