@@ -42,6 +42,15 @@ function MainLayout() {
     },
     {
       type: "collapse",
+      name: "All Photos",
+      key: "all-photos",
+      bgType: "blue",
+      href: "/all-photos",
+      roles: ["photographer"],
+      icon: <MdHome size="15px" color="inherit" />,
+    },
+    {
+      type: "collapse",
       name: "Upload Photos",
       key: "upload-photos",
       bgType: "blue",
@@ -84,15 +93,7 @@ function MainLayout() {
       roles: ["customer", "admin", "photographer", "non-customer"],
       icon: <MdHome size="15px" color="inherit" />,
     },
-    {
-      type: "collapse",
-      name: "All Photos",
-      key: "all-photos",
-      bgType: "light",
-      href: "/all-photos",
-      roles: [""],
-      icon: <MdHome size="15px" color="inherit" />,
-    },
+
     {
       type: "collapse",
       name: "My Downloads",

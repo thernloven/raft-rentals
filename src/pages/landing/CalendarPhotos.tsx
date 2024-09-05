@@ -10,6 +10,7 @@ import { useState } from "react";
 
 function CalendarPhotos() {
   const { state } = useLocation();
+  const [visible, setVisible] = useState(false);
   console.log(state, "state");
   const [currentImage, setCurrentImage] = useState<number>(0);
   const { getAllPublicCalendarPhotosData: allPhotosData } =
@@ -48,6 +49,8 @@ function CalendarPhotos() {
         <Image.PreviewGroup
           preview={{
             current: currentImage,
+            visible, // Controls the visibility of the preview modal
+            onVisibleChange: (visible) => setVisible(visible),
             onChange(current) {
               setCurrentImage(current + 1);
             },
@@ -69,6 +72,7 @@ function CalendarPhotos() {
                   buttonTitle="Add Cart"
                   onImageClick={() => {
                     setCurrentImage(index);
+                    setVisible(true);
                   }}
                   onClick={async () => {
                     // navigate("/checkout");

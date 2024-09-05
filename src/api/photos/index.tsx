@@ -23,6 +23,26 @@ export class Photos {
     };
   };
 
+  public getAllPhotoGrapherPhotos = ({ date }: any) => {
+    const {
+      data: allPhotosData,
+      isPending: allPhotosDataLoading,
+      refetch: allPhotosDataAuthentication,
+    } = useQuery({
+      queryKey: ["getAllPhotos", date],
+      queryFn: async () =>
+        await poster({
+          url: `/api/photos/get_all_photos.php?date=${date}`,
+          method: "GET",
+        }),
+    });
+    return {
+      allPhotosData,
+      allPhotosDataLoading,
+      allPhotosDataAuthentication,
+    };
+  };
+
   // Register authentication
   public getAllPhotosCalendar = ({ date }: any) => {
     const {

@@ -5,16 +5,17 @@ import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 import { CARTS } from "../../api/carts";
 import { useEffect, useState } from "react";
-import { Image } from "antd";
+import { DatePicker, Image, Spin } from "antd";
 
-function AllPhotos() {
+function AllPhotographerPhotos() {
   const { state } = useLocation();
+  const [date, setDate] = useState("");
   const [visible, setVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState<number>(0);
-  const { allPhotosData, allPhotosDataAuthentication } = PHOTOS.getAllPhotos({
-    month: state?.date,
-    time: state?.time,
-  });
+  const { allPhotosData, allPhotosDataAuthentication, allPhotosDataLoading } =
+    PHOTOS.getAllPhotoGrapherPhotos({
+      date: date,
+    });
   const { cartItemsData, cartItemsRefetch } = CARTS.getCartItems();
   const { addCartsMutateAsync, addCartsLoading } = PHOTOS.addCarts();
   // console.log(cartItemsData?.data, "allPhotosData", allPhotosData?.data);
@@ -48,18 +49,16 @@ function AllPhotos() {
       >
         Photos
       </Typography>
-      <Typography
-        variant="h1"
-        color={"gray"}
-        mb={3}
-        fontSize={14}
-        fontWeight={400}
-        component={"h3"}
-      >
-        Sold in groups of up to 10 photos for $20. Multiple photo packages are
-        available for purchase.
-      </Typography>
+      <Box style={{ display: "flex", justifyContent: "end", marginBottom: 10 }}>
+        <DatePicker
+          onChange={(date) => {
+            console.log(date?.format("YYYY-MM-DD"));
+            setDate(date?.format("YYYY-MM-DD"));
+          }}
+        />
+      </Box>
       <Card sx={{ boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)", padding: 2 }}>
+        {allPhotosDataLoading && <Spin />}
         <Grid container spacing={2}>
           <Image.PreviewGroup
             preview={{
@@ -83,8 +82,8 @@ function AllPhotos() {
               >
                 <ImageCard
                   loading={addCartsLoading}
-                  buttonTitle={item?.isAdded ? "Added" : "Add Cart"}
                   isDownload
+                  buttonTitle={item?.isAdded ? "Added" : "Add Cart"}
                   onImageClick={() => {
                     setCurrentImage(index);
                     setVisible(true);
@@ -123,4 +122,4 @@ function AllPhotos() {
   );
 }
 
-export default AllPhotos;
+export default AllPhotographerPhotos;

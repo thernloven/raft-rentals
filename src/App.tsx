@@ -21,6 +21,7 @@ import { useAppSelector } from "./store/hooks";
 import AllAdminPhotos from "./pages/admin/AllAdminPhotos";
 import Calendar from "./pages/landing/Calendar";
 import CalendarPhotos from "./pages/landing/CalendarPhotos";
+import AllPhotographerPhotos from "./pages/photographer/AllPhotographerPhotos";
 
 function App() {
   // const roles = [
@@ -67,7 +68,7 @@ function App() {
 
         <Route element={<ProtectedRoute roles={["photographer"]} />}>
           <Route path="/upload-photos" element={<MyUploads />} />
-          <Route path="/all-photos" element={<AllPhotos />} />
+          <Route path="/all-photos" element={<AllPhotographerPhotos />} />
           <Route path="/my-uploads" element={<UploadPhotos />} />
         </Route>
 
